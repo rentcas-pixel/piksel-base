@@ -56,6 +56,7 @@ export default function HomePage() {
         <OrdersTable 
           orders={filteredOrders} 
           onOrderClick={handleOrderClick} 
+          activeTab={activeTab}
         />
 
 

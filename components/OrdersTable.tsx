@@ -8,12 +8,13 @@ import OrderModal from './OrderModal'
 interface OrdersTableProps {
   orders: Order[]
   onOrderClick: (order: Order) => void
+  activeTab: 'ekranai' | 'viadukai'
 }
 
 type SortField = keyof Order
 type SortDirection = 'asc' | 'desc'
 
-export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) {
+export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersTableProps) {
   const [sortField, setSortField] = useState<SortField>('id')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
@@ -101,6 +102,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
         onClose={handleModalClose}
         onSave={handleOrderSave}
         onDelete={handleOrderDelete}
+        activeTab={activeTab}
       />
       
       <div className="bg-white">

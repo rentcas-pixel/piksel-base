@@ -10,9 +10,10 @@ interface OrderModalProps {
   onClose: () => void
   onSave: (updatedOrder: Order) => void
   onDelete: (orderId: number) => void
+  activeTab: 'ekranai' | 'viadukai'
 }
 
-export default function OrderModal({ order, isOpen, onClose, onSave, onDelete }: OrderModalProps) {
+export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, activeTab }: OrderModalProps) {
   const [formData, setFormData] = useState<Partial<Order>>({})
   const [comment, setComment] = useState('')
   const [reminderDate, setReminderDate] = useState('')
@@ -74,12 +75,34 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete }:
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        {/* Header */}
-        <div className="bg-gray-800 text-white px-6 py-4 rounded-t-lg flex justify-between items-center">
-          <h2 className="text-lg font-semibold">{order.pavadinimas} - Kliento detalės</h2>
+        {/* Header - Pixelmator Pro Style */}
+        <div className="bg-white border border-gray-200 rounded-t-lg p-6 relative">
+          {/* Tab indicator - small text above */}
+          <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
+            {activeTab === 'ekranai' ? 'Ekranai' : 'Viadukai'}
+          </div>
+          
+          {/* Main title */}
+          <h2 className="text-2xl font-bold text-black mb-1">
+            {order.pavadinimas}
+          </h2>
+          
+          {/* Agency name - smaller text below */}
+          <div className="text-base text-gray-700 mb-4">
+            {order.agentura}
+          </div>
+          
+          {/* Colored line based on tab */}
+          <div 
+            className={`h-1 w-full rounded ${
+              activeTab === 'ekranai' ? 'bg-blue-500' : 'bg-black'
+            }`}
+          />
+          
+          {/* Close button */}
           <button
             onClick={onClose}
-            className="text-gray-300 hover:text-white transition-colors"
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
           >
             <X className="h-6 w-6" />
           </button>
