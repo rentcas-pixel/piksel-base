@@ -27,7 +27,11 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo ir pavadinimas */}
           <div className="flex items-center">
-            <h1 className="text-lg font-medium text-gray-900">Collections / orders</h1>
+            <img 
+              src="/logo.png" 
+              alt="Piksel Base Logo" 
+              className="h-8 w-auto"
+            />
           </div>
 
           {/* Paieškos laukas */}
