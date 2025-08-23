@@ -89,13 +89,16 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
   }
 
   return (
-    <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-3xl overflow-hidden shadow-xl">
+    <div className="bg-white">
+      <div className="px-4 py-3 border-b border-gray-200">
+        <h2 className="text-sm font-medium text-gray-900">orders</h2>
+      </div>
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-gray-50/50">
-            <tr className="border-b border-gray-100">
-              <th className="w-4 px-2 py-1.5">
+          <thead className="bg-gray-50 border-b border-gray-200">
+            <tr>
+              <th className="w-4 px-2 py-2">
                 <input
                   type="checkbox"
                   checked={selectedOrders.size === currentOrders.length && currentOrders.length > 0}
@@ -104,20 +107,20 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 />
               </th>
               {[
-                { key: 'pavadinimas', label: 'Pavadinimas' },
-                { key: 'agentura', label: 'Agentūra' },
-                { key: 'patvirtinta', label: 'Patvirtinta' },
-                { key: 'dataNuo', label: 'Data nuo' },
-                { key: 'dataIki', label: 'Data iki' },
-                { key: 'mediaGautas', label: 'Media gautas' },
-                { key: 'galutineKaina', label: 'Galutinė kaina' },
-                { key: 'saskaitaIssiusta', label: 'Sąskaita išsiųsta' },
-                { key: 'saskaitosId', label: 'Sąskaitos ID' },
-                { key: 'atnaujinta', label: 'Atnaujinta' }
+                { key: 'pavadinimas', label: 'CLIENT' },
+                { key: 'agentura', label: 'AGENCY' },
+                { key: 'patvirtinta', label: 'APPROVED' },
+                { key: 'dataNuo', label: 'PERÍODAS' },
+                { key: 'dataIki', label: '' },
+                { key: 'mediaGautas', label: 'MEDIA RECEIVED' },
+                { key: 'galutineKaina', label: 'FINAL PRICE' },
+                { key: 'saskaitaIssiusta', label: 'INVOICE SENT' },
+                { key: 'saskaitosId', label: 'INVOICE ID' },
+                { key: 'atnaujinta', label: 'UPDATE' }
               ].map(({ key, label }) => (
                 <th
                   key={key}
-                  className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/50 transition-all duration-200"
+                  className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                   onClick={() => handleSort(key as SortField)}
                 >
                   <div className="flex items-center space-x-1">
@@ -128,11 +131,11 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white/50 divide-y divide-gray-50">
+          <tbody className="bg-white divide-y divide-gray-100">
             {currentOrders.map((order) => (
               <tr
                 key={order.id}
-                className="hover:bg-gray-50/50 transition-all duration-200 cursor-pointer border-b border-gray-50"
+                className="hover:bg-gray-50 cursor-pointer"
               >
                 <td className="w-4 px-2 py-1.5">
                   <input
@@ -145,40 +148,40 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                 </td>
-                <td className="px-4 py-3 text-sm font-medium text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
-                <td className="px-4 py-3 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
-                <td className="px-4 py-3" onClick={() => onOrderClick(order)}>
-                  <span className={`inline-flex px-3 py-1.5 rounded-2xl text-xs font-semibold ${
+                <td className="px-2 py-1.5 text-xs text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
+                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
+                  <span className={`text-xs font-medium ${
                     order.patvirtinta 
-                      ? 'bg-green-100/80 text-green-700' 
-                      : 'bg-red-100/80 text-red-700'
+                      ? 'text-green-600' 
+                      : 'text-red-600'
                   }`}>
-                    {order.patvirtinta ? 'Patvirtinta' : 'Laukiama'}
+                    {order.patvirtinta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
-                <td className="px-4 py-3 text-sm text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
-                <td className="px-4 py-3" onClick={() => onOrderClick(order)}>
-                  <span className={`inline-flex px-3 py-1.5 rounded-2xl text-xs font-semibold ${
+                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
+                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
+                  <span className={`text-xs font-medium ${
                     order.mediaGautas 
-                      ? 'bg-green-100/80 text-green-700' 
-                      : 'bg-red-100/80 text-red-700'
+                      ? 'text-green-600' 
+                      : 'text-red-600'
                   }`}>
-                    {order.mediaGautas ? 'Taip' : 'Ne'}
+                    {order.mediaGautas ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm font-semibold text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
-                <td className="px-4 py-3" onClick={() => onOrderClick(order)}>
-                  <span className={`inline-flex px-3 py-1.5 rounded-2xl text-xs font-semibold ${
+                <td className="px-2 py-1.5 text-xs text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
+                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
+                  <span className={`text-xs font-medium ${
                     order.saskaitaIssiusta 
-                      ? 'bg-green-100/80 text-green-700' 
-                      : 'bg-red-100/80 text-red-700'
+                      ? 'text-green-600' 
+                      : 'text-red-600'
                   }`}>
-                    {order.saskaitaIssiusta ? 'Taip' : 'Ne'}
+                    {order.saskaitaIssiusta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-sm font-mono text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
-                <td className="px-4 py-3 text-sm text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
               </tr>
             ))}
           </tbody>
@@ -186,7 +189,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Pagination */}
-      <div className="bg-gray-50/50 px-6 py-4 flex items-center justify-between border-t border-gray-100 sm:px-8">
+      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -205,10 +208,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs text-neutral-700">
-              Rodoma <span className="font-medium">{startIndex + 1}</span> iki{' '}
-              <span className="font-medium">{Math.min(endIndex, sortedOrders.length)}</span> iš{' '}
-              <span className="font-medium">{sortedOrders.length}</span> rezultatų
+            <p className="text-xs text-gray-500">
+              Total found: <span className="font-medium">{sortedOrders.length}</span> | <span className="font-medium">{pageSize}</span>
             </p>
           </div>
           <div>
@@ -248,25 +249,24 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Page size selector */}
-      <div className="bg-gray-50/50 px-6 py-4 border-t border-gray-100">
+      <div className="bg-white px-4 py-2 border-t border-gray-200 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <label htmlFor="page-size" className="text-xs text-neutral-700">
-            Puslapio dydis:
-          </label>
+          <span className="text-xs text-gray-500">Eilutės per puslapį:</span>
           <select
-            id="page-size"
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value))
               setCurrentPage(1)
             }}
-            className="border border-neutral-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+            className="border border-gray-300 rounded text-xs px-2 py-1 text-gray-700"
           >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
+            <option value={100}>100</option>
           </select>
+        </div>
+        <div className="text-xs text-gray-500">
+          Puslapis 1 iš 1 | X įrašai
         </div>
       </div>
     </div>
