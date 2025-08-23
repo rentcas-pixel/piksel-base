@@ -5,8 +5,16 @@ echo "===================================="
 
 # Check if Supabase CLI is installed
 if ! command -v supabase &> /dev/null; then
-    echo "❌ Supabase CLI nerastas. Įdiegiame..."
-    npm install -g supabase
+    echo "❌ Supabase CLI nerastas. Įdiegiame per Homebrew..."
+    
+    # Check if Homebrew is installed
+    if ! command -v brew &> /dev/null; then
+        echo "❌ Homebrew nerastas. Įdiegiame Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    
+    echo "📦 Įdiegiame Supabase CLI..."
+    brew install supabase/tap/supabase
 fi
 
 # Check if user is logged in

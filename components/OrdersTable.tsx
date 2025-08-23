@@ -8,13 +8,14 @@ import OrderModal from './OrderModal'
 interface OrdersTableProps {
   orders: Order[]
   onOrderClick: (order: Order) => void
+  onOrderUpdate: (order: Order) => void
   activeTab: 'bendras' | 'ekranai' | 'viadukai'
 }
 
 type SortField = keyof Order
 type SortDirection = 'asc' | 'desc'
 
-export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersTableProps) {
+export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activeTab }: OrdersTableProps) {
   const [sortField, setSortField] = useState<SortField>('id')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
@@ -83,15 +84,33 @@ export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersT
     setSelectedOrder(null)
   }
 
-  const handleOrderSave = (updatedOrder: Order) => {
-    // TODO: Implement save functionality
-    console.log('Saving order:', updatedOrder)
-    onOrderClick(updatedOrder)
+  const handleOrderSave = async (updatedOrder: Order) => {
+    try {
+      // Update parent component
+      onOrderUpdate(updatedOrder)
+    } catch (error) {
+      console.error('Error updating order:', error)
+      alert('Klaida atnaujinant užsakymą')
+    }
   }
 
-  const handleOrderDelete = (orderId: number) => {
-    // TODO: Implement delete functionality
-    console.log('Deleting order:', orderId)
+  const handleOrderDelete = async (orderId: number) => {
+    try {
+      // Delete from Supabase
+      const response = await fetch(`/api/orders/${orderId}`, {
+        method: 'DELETE',
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to delete order')
+      }
+
+      // Refresh the table data
+      window.location.reload()
+    } catch (error) {
+      console.error('Error deleting order:', error)
+      alert('Klaida ištrinant užsakymą')
+    }
   }
 
   return (

@@ -38,8 +38,17 @@ export default function HomePage() {
 
   const handleOrderClick = (order: Order) => {
     setSelectedOrder(order)
-    // TODO: Implement order details modal or navigation
     console.log('Selected order:', order)
+  }
+
+  const handleOrderUpdate = (updatedOrder: Order) => {
+    // Update local state
+    const updatedOrders = filteredOrders.map(order => 
+      order.id === updatedOrder.id ? updatedOrder : order
+    )
+    
+    // Refresh the data
+    window.location.reload()
   }
 
   const handleSearch = (query: string) => {
@@ -58,6 +67,7 @@ export default function HomePage() {
         <OrdersTable 
           orders={filteredOrders} 
           onOrderClick={handleOrderClick} 
+          onOrderUpdate={handleOrderUpdate}
           activeTab={activeTab}
         />
 

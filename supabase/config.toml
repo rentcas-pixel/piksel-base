@@ -15,7 +15,6 @@ extra_search_path = ["public", "extensions"]
 max_rows = 1000
 
 [db]
-enabled = true
 # Port to use for the local database URL.
 port = 54322
 # Port used by db diff command to initialize the shadow database.
@@ -264,10 +263,6 @@ from = ""
 
 [edge_runtime]
 enabled = false
-# Port to use for the Edge Runtime API.
-port = 54325
-# The maximum payload size for the Edge Runtime API in bytes.
-max_payload_size = "1MB"
 
 # List of regions that the Edge Runtime is deployed to.
 # Defaults to ["us-east-1"] if not specified.
@@ -275,24 +270,6 @@ max_payload_size = "1MB"
 
 [analytics]
 enabled = false
-# Configure one of the supported analytics providers: `posthog`, `plausible`, `mixpanel`, `segment`.
-[analytics.posthog]
-enabled = false
-api_key = ""
-api_host = "https://app.posthog.com"
-
-[analytics.plausible]
-enabled = false
-api_key = ""
-
-[analytics.mixpanel]
-enabled = false
-project_token = ""
-
-[analytics.segment]
-enabled = false
-write_key = ""
 
 [experimental]
 # Enable experimental features. Please read the docs before enabling any of these features.
-enable_realtime_audit_logs = false

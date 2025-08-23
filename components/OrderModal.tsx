@@ -51,15 +51,36 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
     }
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (order) {
-      const updatedOrder: Order = {
-        ...order,
-        ...formData,
-        komentaras: comment
+      try {
+        const updatedOrder: Order = {
+          ...order,
+          ...formData,
+          komentaras: comment,
+          atnaujinta: new Date().toISOString()
+        }
+        
+        // Save to Supabase
+        const response = await fetch(`/api/orders/${order.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedOrder),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to save order')
+        }
+
+        const savedOrder = await response.json()
+        onSave(savedOrder)
+        onClose()
+      } catch (error) {
+        console.error('Error saving order:', error)
+        alert('Klaida išsaugant užsakymą')
       }
-      onSave(updatedOrder)
-      onClose()
     }
   }
 
