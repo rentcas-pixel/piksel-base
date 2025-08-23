@@ -79,7 +79,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
         <div className="bg-white border border-gray-200 rounded-t-lg p-6 relative">
           {/* Tab indicator with order number - small text above */}
           <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
-            {activeTab === 'ekranai' ? 'EKRANAI' : 'VIADUKAI'} - {order.id}
+            {activeTab === 'ekranai' ? 'EKRANAI' : 'VIADUKAI'} - {order.saskaitosId}
           </div>
           
           {/* Main title */}

@@ -118,7 +118,7 @@ export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersT
                 {[
                   { key: 'pavadinimas', label: 'Client' },
                   { key: 'agentura', label: 'Agency' },
-                  { key: 'saskaitosId', label: 'Order Nro' },
+                  { key: 'saskaitosId', label: 'Order No' },
                   { key: 'patvirtinta', label: 'Approved' },
                   { key: 'periodas', label: 'Period' },
                   { key: 'mediaGautas', label: 'Media Received' },
