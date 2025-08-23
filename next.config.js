@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
   experimental: {
     turbo: {
       rules: {
@@ -11,6 +13,7 @@ const nextConfig = {
     },
   },
   images: {
+    unoptimized: true,
     domains: ['localhost', 'supabase.co'],
     formats: ['image/webp', 'image/avif'],
   },
