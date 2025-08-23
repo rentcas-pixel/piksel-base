@@ -118,12 +118,12 @@ export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersT
                 {[
                   { key: 'pavadinimas', label: 'Client' },
                   { key: 'agentura', label: 'Agency' },
+                  { key: 'saskaitosId', label: 'Order Nro' },
                   { key: 'patvirtinta', label: 'Approved' },
                   { key: 'periodas', label: 'Period' },
                   { key: 'mediaGautas', label: 'Media Received' },
                   { key: 'galutineKaina', label: 'Final Price' },
                   { key: 'saskaitaIssiusta', label: 'Invoice Sent' },
-                  { key: 'saskaitosId', label: 'Invoice ID' },
                   { key: 'atnaujinta', label: 'Update' }
                 ].map(({ key, label }) => (
                   <th
@@ -150,6 +150,9 @@ export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersT
                   </td>
                   <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => handleRowClick(order)}>
                     {order.agentura}
+                  </td>
+                  <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => handleRowClick(order)}>
+                    {order.saskaitosId}
                   </td>
                   <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
                     <span className={`text-sm font-medium ${
@@ -185,9 +188,6 @@ export default function OrdersTable({ orders, onOrderClick, activeTab }: OrdersT
                     }`}>
                       {order.saskaitaIssiusta ? 'True' : 'False'}
                     </span>
-                  </td>
-                  <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => handleRowClick(order)}>
-                    {order.saskaitosId}
                   </td>
                   <td className="px-4 py-2.5 text-sm text-gray-500" onClick={() => handleRowClick(order)}>
                     {formatDate(order.atnaujinta)}
