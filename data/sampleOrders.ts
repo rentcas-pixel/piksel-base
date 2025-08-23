@@ -4,7 +4,7 @@ export const sampleOrders: Order[] = [
   // Ekranų užsakymai
   {
     id: 1,
-    pavadinimas: '🖥️ Ignitis Ekranų Kampanija',
+    pavadinimas: 'Ignitis Ekranų Kampanija',
     agentura: 'Ignitis',
     patvirtinta: true,
     dataNuo: '2024-01-15',
@@ -19,7 +19,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 2,
-    pavadinimas: '📺 Vilnius Miesto Ekranai',
+    pavadinimas: 'Vilnius Miesto Ekranai',
     agentura: 'Vilniaus Miesto Savivaldybė',
     patvirtinta: true,
     dataNuo: '2024-02-01',
@@ -34,7 +34,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 3,
-    pavadinimas: '🖥️ Kaunas Prekybos Centras',
+    pavadinimas: 'Kaunas Prekybos Centras',
     agentura: 'Kauno Prekybos Centras',
     patvirtinta: false,
     dataNuo: '2024-02-15',
@@ -49,7 +49,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 4,
-    pavadinimas: '📺 Klaipėda Uosto Ekranai',
+    pavadinimas: 'Klaipėda Uosto Ekranai',
     agentura: 'Klaipėdos Uostas',
     patvirtinta: true,
     dataNuo: '2024-01-20',
@@ -64,7 +64,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 5,
-    pavadinimas: '🖥️ Šiauliai Miesto Ekranai',
+    pavadinimas: 'Šiauliai Miesto Ekranai',
     agentura: 'Šiaulių Miesto Savivaldybė',
     patvirtinta: true,
     dataNuo: '2024-03-01',
@@ -81,7 +81,7 @@ export const sampleOrders: Order[] = [
   // Viadukų užsakymai
   {
     id: 6,
-    pavadinimas: '🌉 Vilnius - Kaunas Viadukas',
+    pavadinimas: 'Vilnius - Kaunas Viadukas',
     agentura: 'Lietuvos Geležinkeliai',
     patvirtinta: true,
     dataNuo: '2024-01-10',
@@ -96,7 +96,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 7,
-    pavadinimas: '🌉 Klaipėda - Palanga Viadukas',
+    pavadinimas: 'Klaipėda - Palanga Viadukas',
     agentura: 'Lietuvos Automobilių Kelių Direkcija',
     patvirtinta: false,
     dataNuo: '2024-02-01',
@@ -111,7 +111,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 8,
-    pavadinimas: '🌉 Šiauliai - Panevėžys Viadukas',
+    pavadinimas: 'Šiauliai - Panevėžys Viadukas',
     agentura: 'Panevėžio Miesto Savivaldybė',
     patvirtinta: true,
     dataNuo: '2024-01-25',
@@ -126,7 +126,7 @@ export const sampleOrders: Order[] = [
   },
   {
     id: 9,
-    pavadinimas: '🌉 Alytus - Marijampolė Viadukas',
+    pavadinimas: 'Alytus - Marijampolė Viadukas',
     agentura: 'Marijampolės Miesto Savivaldybė',
     patvirtinta: true,
     dataNuo: '2024-03-01',
