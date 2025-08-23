@@ -7,28 +7,28 @@ interface TabsProps {
 
 export default function Tabs({ activeTab, onTabChange }: TabsProps) {
   return (
-    <div className="bg-white border-b border-neutral-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex space-x-8">
+    <div className="bg-white/60 backdrop-blur-xl border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="flex space-x-1">
           <button
             onClick={() => onTabChange('ekranai')}
-            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
+            className={`py-3 px-6 rounded-2xl font-medium text-sm transition-all duration-300 ${
               activeTab === 'ekranai'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'
+                ? 'bg-blue-500 text-white shadow-lg'
+                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100/50'
             }`}
           >
-            🖥️ Ekranai
+            Ekranai
           </button>
           <button
             onClick={() => onTabChange('viadukai')}
-            className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 ${
+            className={`py-3 px-6 rounded-2xl font-medium text-sm transition-all duration-300 ${
               activeTab === 'viadukai'
-                ? 'border-primary-500 text-primary-600'
-                : 'border-transparent text-neutral-500 hover:text-neutral-700 hover:border-neutral-300'
+                ? 'bg-blue-500 text-white shadow-lg'
+                : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100/50'
             }`}
           >
-            🌉 Viadukai
+            Viadukai
           </button>
         </div>
       </div>

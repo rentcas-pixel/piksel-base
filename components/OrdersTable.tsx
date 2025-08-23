@@ -89,12 +89,12 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+    <div className="bg-white/80 backdrop-blur-xl border border-gray-100 rounded-3xl overflow-hidden shadow-xl">
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-gray-50">
-            <tr className="border-b border-gray-200">
+          <thead className="bg-gray-50/50">
+            <tr className="border-b border-gray-100">
               <th className="w-4 px-2 py-1.5">
                 <input
                   type="checkbox"
@@ -117,10 +117,10 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ].map(({ key, label }) => (
                 <th
                   key={key}
-                  className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-150"
+                  className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100/50 transition-all duration-200"
                   onClick={() => handleSort(key as SortField)}
                 >
-                  <div className="flex items-center space-x-0.5">
+                  <div className="flex items-center space-x-1">
                     <span>{label}</span>
                     {getSortIcon(key as SortField)}
                   </div>
@@ -128,11 +128,11 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-100">
+          <tbody className="bg-white/50 divide-y divide-gray-50">
             {currentOrders.map((order) => (
               <tr
                 key={order.id}
-                className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer border-b border-gray-100"
+                className="hover:bg-gray-50/50 transition-all duration-200 cursor-pointer border-b border-gray-50"
               >
                 <td className="w-4 px-2 py-1.5">
                   <input
@@ -145,40 +145,40 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                 </td>
-                <td className="px-2 py-1.5 text-xs font-medium text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
-                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
-                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
-                  <span className={`inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                <td className="px-4 py-3 text-sm font-medium text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
+                <td className="px-4 py-3 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
+                <td className="px-4 py-3" onClick={() => onOrderClick(order)}>
+                  <span className={`inline-flex px-3 py-1.5 rounded-2xl text-xs font-semibold ${
                     order.patvirtinta 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-green-100/80 text-green-700' 
+                      : 'bg-red-100/80 text-red-700'
                   }`}>
                     {order.patvirtinta ? 'Patvirtinta' : 'Laukiama'}
                   </span>
                 </td>
-                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
-                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
-                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
-                  <span className={`inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                <td className="px-4 py-3 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
+                <td className="px-4 py-3 text-sm text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
+                <td className="px-4 py-3" onClick={() => onOrderClick(order)}>
+                  <span className={`inline-flex px-3 py-1.5 rounded-2xl text-xs font-semibold ${
                     order.mediaGautas 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-green-100/80 text-green-700' 
+                      : 'bg-red-100/80 text-red-700'
                   }`}>
                     {order.mediaGautas ? 'Taip' : 'Ne'}
                   </span>
                 </td>
-                <td className="px-2 py-1.5 text-xs font-medium text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
-                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
-                  <span className={`inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                <td className="px-4 py-3 text-sm font-semibold text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
+                <td className="px-4 py-3" onClick={() => onOrderClick(order)}>
+                  <span className={`inline-flex px-3 py-1.5 rounded-2xl text-xs font-semibold ${
                     order.saskaitaIssiusta 
-                      ? 'bg-green-100 text-green-800' 
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-green-100/80 text-green-700' 
+                      : 'bg-red-100/80 text-red-700'
                   }`}>
                     {order.saskaitaIssiusta ? 'Taip' : 'Ne'}
                   </span>
                 </td>
-                <td className="px-2 py-1.5 text-xs font-mono text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
-                <td className="px-2 py-1.5 text-xs text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
+                <td className="px-4 py-3 text-sm font-mono text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
+                <td className="px-4 py-3 text-sm text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
               </tr>
             ))}
           </tbody>
@@ -186,7 +186,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Pagination */}
-      <div className="bg-gray-50 px-3 py-2 flex items-center justify-between border-t border-gray-200 sm:px-4">
+      <div className="bg-gray-50/50 px-6 py-4 flex items-center justify-between border-t border-gray-100 sm:px-8">
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -248,7 +248,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Page size selector */}
-      <div className="bg-gray-50 px-3 py-2 border-t border-gray-200">
+      <div className="bg-gray-50/50 px-6 py-4 border-t border-gray-100">
         <div className="flex items-center space-x-2">
           <label htmlFor="page-size" className="text-xs text-neutral-700">
             Puslapio dydis:
