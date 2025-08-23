@@ -110,8 +110,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 { key: 'pavadinimas', label: 'Client' },
                 { key: 'agentura', label: 'Agency' },
                 { key: 'patvirtinta', label: 'Approved' },
-                { key: 'dataNuo', label: 'Period - From' },
-                { key: 'dataIki', label: 'Period - To' },
+                { key: 'dataNuo', label: 'From' },
+                { key: 'dataIki', label: 'To' },
                 { key: 'mediaGautas', label: 'Media Received' },
                 { key: 'galutineKaina', label: 'Final Price' },
                 { key: 'saskaitaIssiusta', label: 'Invoice Sent' },
@@ -120,7 +120,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ].map(({ key, label }) => (
                 <th
                   key={key}
-                  className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                  className="px-4 py-3 text-left text-sm font-medium text-gray-500 cursor-pointer"
                   onClick={() => handleSort(key as SortField)}
                 >
                   <div className="flex items-center space-x-1">
