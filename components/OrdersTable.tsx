@@ -75,8 +75,10 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
   }
 
   const handleRowClick = (order: Order) => {
+    console.log('Row clicked:', order)
     setSelectedOrder(order)
     setIsModalOpen(true)
+    console.log('Modal state:', { selectedOrder: order, isModalOpen: true })
   }
 
   const handleModalClose = () => {

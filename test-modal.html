@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal-content { background: white; margin: 15% auto; padding: 20px; width: 80%; max-width: 500px; border-radius: 5px; }
+        .close { float: right; cursor: pointer; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Modal Test</h1>
+    <button class="test-button" onclick="openModal()">Atidaryti Modal</button>
+    
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Test Modal</h2>
+            <p>Jei matai šį modalą, modal funkcionalumas veikia!</p>
+            <button onclick="closeModal()">Uždaryti</button>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('testModal').style.display = 'block';
+            console.log('Modal atidarytas');
+        }
+        
+        function closeModal() {
+            document.getElementById('testModal').style.display = 'none';
+            console.log('Modal uždarytas');
+        }
+        
+        // Uždaryti modal paspaudus už jo ribų
+        window.onclick = function(event) {
+            const modal = document.getElementById('testModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

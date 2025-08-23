@@ -14,6 +14,8 @@ interface OrderModalProps {
 }
 
 export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, activeTab }: OrderModalProps) {
+  console.log('OrderModal props:', { order, isOpen, onClose, onSave, onDelete, activeTab })
+  
   const [formData, setFormData] = useState<Partial<Order>>({})
   const [comment, setComment] = useState('')
   const [reminderDate, setReminderDate] = useState('')
@@ -91,6 +93,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
     }
   }
 
+  console.log('Modal render check:', { isOpen, order, shouldRender: isOpen && order })
   if (!isOpen || !order) return null
 
   return (
