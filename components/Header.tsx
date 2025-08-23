@@ -59,9 +59,6 @@ export default function Header() {
             <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded">
               + Pridėti
             </button>
-            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded">
-              Lauke
-            </button>
           </div>
         </div>
       </div>
