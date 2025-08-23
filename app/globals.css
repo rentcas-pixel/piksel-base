@@ -15,19 +15,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-button;
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-1.5 px-3 rounded-md transition-colors duration-200 shadow-button text-sm;
   }
   
   .btn-success {
-    @apply bg-success-600 hover:bg-success-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-button;
+    @apply bg-success-600 hover:bg-success-700 text-white font-medium py-1.5 px-3 rounded-md transition-colors duration-200 shadow-button text-sm;
   }
   
   .btn-neutral {
-    @apply bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-button;
+    @apply bg-neutral-200 hover:bg-neutral-300 text-neutral-700 font-medium py-1.5 px-3 rounded-md transition-colors duration-200 shadow-button text-sm;
   }
   
   .status-badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium;
   }
   
   .status-success {
@@ -39,14 +39,14 @@
   }
   
   .table-header {
-    @apply px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider bg-neutral-50;
+    @apply px-3 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider bg-neutral-50;
   }
   
   .table-cell {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-neutral-900;
+    @apply px-3 py-2 whitespace-nowrap text-xs text-neutral-900;
   }
   
   .table-row {
-    @apply hover:bg-neutral-50 transition-colors duration-150 cursor-pointer;
+    @apply hover:bg-neutral-100 transition-colors duration-150 cursor-pointer;
   }
 }

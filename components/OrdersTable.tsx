@@ -63,14 +63,14 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) return null
     return sortDirection === 'asc' ? (
-      <ChevronUp className="h-4 w-4" />
+      <ChevronUp className="h-3 w-3" />
     ) : (
-      <ChevronDown className="h-4 w-4" />
+      <ChevronDown className="h-3 w-3" />
     )
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-card">
+    <div className="bg-white rounded-lg shadow-card overflow-hidden">
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-neutral-200">
@@ -93,7 +93,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                   className="table-header cursor-pointer hover:bg-neutral-100 transition-colors duration-150"
                   onClick={() => handleSort(key as SortField)}
                 >
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center space-x-0.5">
                     <span>{label}</span>
                     {getSortIcon(key as SortField)}
                   </div>
@@ -128,7 +128,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.saskaitaIssiusta ? 'Taip' : 'Ne'}
                   </span>
                 </td>
-                <td className="table-cell font-mono text-sm">{order.saskaitosId}</td>
+                <td className="table-cell font-mono text-xs">{order.saskaitosId}</td>
                 <td className="table-cell text-neutral-500">{formatDate(order.atnaujinta)}</td>
               </tr>
             ))}
@@ -137,26 +137,26 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Pagination */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-neutral-200 sm:px-6">
+      <div className="bg-white px-3 py-2 flex items-center justify-between border-t border-neutral-200 sm:px-4">
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="relative inline-flex items-center px-4 py-2 border border-neutral-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="relative inline-flex items-center px-3 py-1.5 border border-neutral-300 text-xs font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Ankstesnis
           </button>
           <button
             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
             disabled={currentPage === totalPages}
-            className="ml-3 relative inline-flex items-center px-4 py-2 border border-neutral-300 text-sm font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="ml-2 relative inline-flex items-center px-3 py-1.5 border border-neutral-300 text-xs font-medium rounded-md text-neutral-700 bg-white hover:bg-neutral-50 disabled:cursor-not-allowed"
           >
             Kitas
           </button>
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-neutral-700">
+            <p className="text-xs text-neutral-700">
               Rodoma <span className="font-medium">{startIndex + 1}</span> iki{' '}
               <span className="font-medium">{Math.min(endIndex, sortedOrders.length)}</span> iš{' '}
               <span className="font-medium">{sortedOrders.length}</span> rezultatų
@@ -169,14 +169,14 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 disabled={currentPage === 1}
                 className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-neutral-300 bg-white text-sm font-medium text-neutral-500 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
               
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => setCurrentPage(page)}
-                  className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                  className={`relative inline-flex items-center px-3 py-1.5 border text-xs font-medium ${
                     page === currentPage
                       ? 'z-10 bg-primary-50 border-primary-500 text-primary-600'
                       : 'bg-white border-neutral-300 text-neutral-500 hover:bg-neutral-50'
@@ -191,7 +191,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 disabled={currentPage === totalPages}
                 className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-neutral-300 bg-white text-sm font-medium text-neutral-500 hover:bg-neutral-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4" />
               </button>
             </nav>
           </div>
@@ -199,9 +199,9 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Page size selector */}
-      <div className="bg-neutral-50 px-4 py-3 border-t border-neutral-200">
+      <div className="bg-neutral-50 px-3 py-2 border-t border-neutral-200">
         <div className="flex items-center space-x-2">
-          <label htmlFor="page-size" className="text-sm text-neutral-700">
+          <label htmlFor="page-size" className="text-xs text-neutral-700">
             Puslapio dydis:
           </label>
           <select
@@ -211,7 +211,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               setPageSize(Number(e.target.value))
               setCurrentPage(1)
             }}
-            className="border border-neutral-300 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
+            className="border border-neutral-300 rounded-md px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
           >
             <option value={5}>5</option>
             <option value={10}>10</option>
