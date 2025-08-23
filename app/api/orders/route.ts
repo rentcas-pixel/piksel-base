@@ -62,8 +62,8 @@ export async function POST(request: NextRequest) {
   try {
     // Test Supabase connection
     console.log('Testing Supabase connection...')
-    console.log('Supabase URL:', supabase.supabaseUrl)
-    console.log('Supabase Key length:', supabase.supabaseKey?.length || 'No key')
+    console.log('Supabase URL: https://zgqgxyydjnaddxrcffle.supabase.co')
+    console.log('Supabase Key exists:', !!supabase.supabaseKey)
     
     const { data: testData, error: testError } = await supabase
       .from('orders')
