@@ -90,15 +90,15 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
 
   return (
     <div className="bg-white">
-      <div className="px-4 py-3 border-b border-gray-200">
-        <h2 className="text-sm font-medium text-gray-900">orders</h2>
+      <div className="px-8 py-4 border-b border-gray-200">
+        <h2 className="text-base font-medium text-gray-900">orders</h2>
       </div>
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              <th className="w-4 px-2 py-2">
+              <th className="w-6 px-4 py-3">
                 <input
                   type="checkbox"
                   checked={selectedOrders.size === currentOrders.length && currentOrders.length > 0}
@@ -120,7 +120,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ].map(({ key, label }) => (
                 <th
                   key={key}
-                  className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
+                  className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                   onClick={() => handleSort(key as SortField)}
                 >
                   <div className="flex items-center space-x-1">
@@ -137,7 +137,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 key={order.id}
                 className="hover:bg-gray-50 cursor-pointer"
               >
-                <td className="w-4 px-2 py-1.5">
+                <td className="w-6 px-4 py-2.5">
                   <input
                     type="checkbox"
                     checked={selectedOrders.has(order.id)}
@@ -148,10 +148,10 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
                 </td>
-                <td className="px-2 py-1.5 text-xs text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
-                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
-                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
-                  <span className={`text-xs font-medium ${
+                <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
+                <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
+                  <span className={`text-sm font-medium ${
                     order.patvirtinta 
                       ? 'text-green-600' 
                       : 'text-red-600'
@@ -159,10 +159,10 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.patvirtinta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
-                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
-                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
-                  <span className={`text-xs font-medium ${
+                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
+                <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
+                  <span className={`text-sm font-medium ${
                     order.mediaGautas 
                       ? 'text-green-600' 
                       : 'text-red-600'
@@ -170,9 +170,9 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.mediaGautas ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-2 py-1.5 text-xs text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
-                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
-                  <span className={`text-xs font-medium ${
+                <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
+                <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
+                  <span className={`text-sm font-medium ${
                     order.saskaitaIssiusta 
                       ? 'text-green-600' 
                       : 'text-red-600'
@@ -180,8 +180,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.saskaitaIssiusta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-2 py-1.5 text-xs text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
-                <td className="px-2 py-1.5 text-xs text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
               </tr>
             ))}
           </tbody>
@@ -189,7 +189,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Pagination */}
-      <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
+      <div className="bg-white px-8 py-4 flex items-center justify-between border-t border-gray-200">
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -208,8 +208,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs text-gray-500">
-              Total found: <span className="font-medium">{sortedOrders.length}</span> | <span className="font-medium">{pageSize}</span>
+            <p className="text-sm text-gray-500">
+              Total found: <span className="font-medium">{sortedOrders.length}</span> iš <span className="font-medium">{sortedOrders.length}</span>
             </p>
           </div>
           <div>
@@ -249,24 +249,24 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Page size selector */}
-      <div className="bg-white px-4 py-2 border-t border-gray-200 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <span className="text-xs text-gray-500">Eilutės per puslapį:</span>
+      <div className="bg-white px-8 py-3 border-t border-gray-200 flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <span className="text-sm text-gray-500">Eilutės per puslapį:</span>
           <select
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value))
               setCurrentPage(1)
             }}
-            className="border border-gray-300 rounded text-xs px-2 py-1 text-gray-700"
+            className="border border-gray-300 rounded text-sm px-3 py-1.5 text-gray-700"
           >
             <option value={20}>20</option>
             <option value={50}>50</option>
             <option value={100}>100</option>
           </select>
         </div>
-        <div className="text-xs text-gray-500">
-          Puslapis 1 iš 1 | X įrašai
+        <div className="text-sm text-gray-500">
+          Puslapis 1 iš 1 | {sortedOrders.length} įrašai
         </div>
       </div>
     </div>

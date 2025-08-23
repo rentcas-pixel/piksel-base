@@ -23,15 +23,15 @@ export default function Header() {
 
   return (
     <header className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-12">
+      <div className="w-full px-8 lg:px-12">
+        <div className="flex justify-between items-center h-16">
           {/* Logo ir pavadinimas */}
           <div className="flex items-center">
             <h1 className="text-lg font-medium text-gray-900">Collections / orders</h1>
           </div>
 
           {/* Paieškos laukas */}
-          <div className="flex-1 max-w-md mx-4">
+          <div className="flex-1 max-w-lg mx-8">
             <form onSubmit={handleSearch} className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-4 w-4 text-gray-400" />
@@ -41,25 +41,25 @@ export default function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search"
-                className="block w-full pl-10 pr-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full pl-10 pr-3 py-2.5 text-sm border border-gray-300 rounded-md bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
               />
             </form>
           </div>
 
           {/* Veiksmų mygtukai */}
-          <div className="flex items-center space-x-2">
-            <select className="border border-gray-300 rounded text-sm px-2 py-1 text-gray-700">
+          <div className="flex items-center space-x-4">
+            <select className="border border-gray-300 rounded text-sm px-3 py-2 text-gray-700">
               <option>Visi statusai</option>
             </select>
-            <input type="date" className="border border-gray-300 rounded text-sm px-2 py-1 text-gray-700" />
-            <input type="date" className="border border-gray-300 rounded text-sm px-2 py-1 text-gray-700" />
-            <select className="border border-gray-300 rounded text-sm px-2 py-1 text-gray-700">
+            <input type="date" className="border border-gray-300 rounded text-sm px-3 py-2 text-gray-700" />
+            <input type="date" className="border border-gray-300 rounded text-sm px-3 py-2 text-gray-700" />
+            <select className="border border-gray-300 rounded text-sm px-3 py-2 text-gray-700">
               <option>Rūšiuoti: Data nuo</option>
             </select>
-            <button className="inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded">
+            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded">
               + Pridėti
             </button>
-            <button className="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded">
+            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded">
               Lauke
             </button>
           </div>
