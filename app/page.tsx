@@ -8,13 +8,15 @@ import { Order, OrderFilters } from '../types/order'
 import { sampleOrders } from '../data/sampleOrders'
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState<'ekranai' | 'viadukai'>('ekranai')
+  const [activeTab, setActiveTab] = useState<'bendras' | 'ekranai' | 'viadukai'>('bendras')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
 
   // Filtruoti užsakymus pagal tab ir paieškos tekstą
   const filteredOrders = useMemo(() => {
-    let filtered = sampleOrders.filter(order => order.tipas === activeTab)
+    let filtered = activeTab === 'bendras' 
+      ? sampleOrders // Rodyti visus užsakymus
+      : sampleOrders.filter(order => order.tipas === activeTab)
     
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
@@ -29,7 +31,7 @@ export default function HomePage() {
     return filtered
   }, [activeTab, searchQuery])
 
-  const handleTabChange = (tab: 'ekranai' | 'viadukai') => {
+  const handleTabChange = (tab: 'bendras' | 'ekranai' | 'viadukai') => {
     setActiveTab(tab)
     setSearchQuery('') // Reset paieškos tekstą keičiant tab
   }

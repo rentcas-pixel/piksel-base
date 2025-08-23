@@ -10,7 +10,7 @@ interface OrderModalProps {
   onClose: () => void
   onSave: (updatedOrder: Order) => void
   onDelete: (orderId: number) => void
-  activeTab: 'ekranai' | 'viadukai'
+  activeTab: 'bendras' | 'ekranai' | 'viadukai'
 }
 
 export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, activeTab }: OrderModalProps) {
@@ -79,7 +79,12 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
         <div className="bg-white border border-gray-200 rounded-t-lg p-6 relative">
           {/* Tab indicator with order number - small text above */}
           <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
-            {activeTab === 'ekranai' ? 'EKRANAI' : 'VIADUKAI'} - {order.saskaitosId}
+            {activeTab === 'bendras' 
+              ? `UŽSAKYMAS - ${order.saskaitosId}`
+              : activeTab === 'ekranai' 
+                ? `EKRANAI - ${order.saskaitosId}`
+                : `VIADUKAI - ${order.saskaitosId}`
+            }
           </div>
           
           {/* Main title */}
@@ -95,7 +100,11 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
           {/* Colored line based on tab */}
           <div 
             className={`h-1 w-full rounded ${
-              activeTab === 'ekranai' ? 'bg-blue-500' : 'bg-black'
+              activeTab === 'bendras' 
+                ? 'bg-gray-500' 
+                : activeTab === 'ekranai' 
+                  ? 'bg-blue-500' 
+                  : 'bg-black'
             }`}
           />
           

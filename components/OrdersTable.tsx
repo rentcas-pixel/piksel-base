@@ -8,7 +8,7 @@ import OrderModal from './OrderModal'
 interface OrdersTableProps {
   orders: Order[]
   onOrderClick: (order: Order) => void
-  activeTab: 'ekranai' | 'viadukai'
+  activeTab: 'bendras' | 'ekranai' | 'viadukai'
 }
 
 type SortField = keyof Order
