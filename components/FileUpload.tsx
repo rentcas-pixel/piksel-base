@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Upload, X, File, Image, FileText, Download } from 'lucide-react'
 
 interface FileUploadProps {
@@ -24,6 +24,11 @@ export default function FileUpload({ orderId, onFileUploaded }: FileUploadProps)
   const [files, setFiles] = useState<FileRecord[]>([])
   const [uploadProgress, setUploadProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Load files on component mount
+  useEffect(() => {
+    fetchFiles()
+  }, [orderId])
 
   // Gauti esamus failus (mock data)
   const fetchFiles = async () => {

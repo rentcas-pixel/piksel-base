@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS orders (
   media_gautas BOOLEAN DEFAULT false,
   galutine_kaina DECIMAL(10,2) NOT NULL,
   saskaita_issiusta BOOLEAN DEFAULT false,
-  saskaitos_id TEXT NOT NULL UNIQUE,
+  saskaitosId TEXT NOT NULL UNIQUE,
   tipas TEXT NOT NULL CHECK (tipas IN ('ekranai', 'viadukai')),
   komentaras TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -55,7 +55,7 @@ CREATE TRIGGER update_orders_updated_at
   EXECUTE FUNCTION update_updated_at_column();
 
 -- Insert sample data
-INSERT INTO orders (pavadinimas, agentura, patvirtinta, data_nuo, data_iki, media_gautas, galutine_kaina, saskaita_issiusta, saskaitos_id, tipas, komentaras) VALUES
+INSERT INTO orders (pavadinimas, agentura, patvirtinta, data_nuo, data_iki, media_gautas, galutine_kaina, saskaita_issiusta, saskaitosId, tipas, komentaras) VALUES
 ('🖥️ Ignitis Ekranų Kampanija', 'Ignitis', true, '2024-01-15', '2024-03-15', true, 2500.00, true, 'INV-2024-001', 'ekranai', 'Pagrindinė ekranų kampanija Vilniuje ir Kaune'),
 ('📺 Vilnius Miesto Ekranai', 'Vilniaus Miesto Savivaldybė', true, '2024-02-01', '2024-04-01', true, 1800.00, false, 'INV-2024-002', 'ekranai', 'Miesto informacijos ekranai'),
 ('🖥️ Kaunas Prekybos Centras', 'Kauno Prekybos Centras', false, '2024-02-15', '2024-05-15', false, 3200.00, false, 'INV-2024-003', 'ekranai', 'Prekybos centro reklamų ekranai'),
@@ -65,7 +65,7 @@ INSERT INTO orders (pavadinimas, agentura, patvirtinta, data_nuo, data_iki, medi
 ('🌉 Klaipėda - Palanga Viadukas', 'Lietuvos Automobilių Kelių Direkcija', false, '2024-02-01', '2024-10-31', false, 8500.00, false, 'INV-2024-007', 'viadukai', 'Jūros kranto kelio viadukas'),
 ('🌉 Šiauliai - Panevėžys Viadukas', 'Panevėžio Miesto Savivaldybė', true, '2024-01-25', '2024-08-25', true, 12000.00, false, 'INV-2024-008', 'viadukai', 'Regioninio kelio viadukas'),
 ('🌉 Alytus - Marijampolė Viadukas', 'Marijampolės Miesto Savivaldybė', true, '2024-03-01', '2024-09-30', false, 9500.00, false, 'INV-2024-009', 'viadukai', 'Pietų regiono kelio viadukas')
-ON CONFLICT (saskaitos_id) DO NOTHING;
+ON CONFLICT (saskaitosId) DO NOTHING;
 
 -- Create storage bucket for files
 -- Note: This needs to be done in Supabase Dashboard > Storage

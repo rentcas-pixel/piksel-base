@@ -20,7 +20,7 @@ export interface Database {
           media_gautas: boolean
           galutine_kaina: number
           saskaita_issiusta: boolean
-          saskaitos_id: string
+          saskaitosId: string
           atnaujinta: string
           tipas: 'ekranai' | 'viadukai'
           komentaras?: string
@@ -36,7 +36,7 @@ export interface Database {
           media_gautas?: boolean
           galutine_kaina: number
           saskaita_issiusta?: boolean
-          saskaitos_id: string
+          saskaitosId: string
           tipas: 'ekranai' | 'viadukai'
           komentaras?: string
         }
@@ -49,7 +49,7 @@ export interface Database {
           media_gautas?: boolean
           galutine_kaina?: number
           saskaita_issiusta?: boolean
-          saskaitos_id?: string
+          saskaitosId?: string
           komentaras?: string
           updated_at?: string
         }

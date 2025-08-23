@@ -34,17 +34,15 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
-    const { data, error } = await supabase
-      .from('orders')
-      .insert([body])
-      .select()
-      .single()
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
+    // Mock response for initial deployment
+    const mockOrder = {
+      id: Date.now().toString(),
+      ...body,
+      sukurtas: new Date().toISOString(),
+      atnaujintas: new Date().toISOString()
     }
 
-    return NextResponse.json(data, { status: 201 })
+    return NextResponse.json(mockOrder, { status: 201 })
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
