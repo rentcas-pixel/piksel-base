@@ -3,6 +3,7 @@
 import { Order } from '../types/order'
 import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState, useMemo } from 'react'
+import OrderModal from './OrderModal'
 
 interface OrdersTableProps {
   orders: Order[]
@@ -17,6 +18,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
 
   const handleSort = (field: SortField) => {
@@ -70,13 +73,42 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
     )
   }
 
+  const handleRowClick = (order: Order) => {
+    setSelectedOrder(order)
+    setIsModalOpen(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+    setSelectedOrder(null)
+  }
+
+  const handleOrderSave = (updatedOrder: Order) => {
+    // TODO: Implement save functionality
+    console.log('Saving order:', updatedOrder)
+    onOrderClick(updatedOrder)
+  }
+
+  const handleOrderDelete = (orderId: string) => {
+    // TODO: Implement delete functionality
+    console.log('Deleting order:', orderId)
+  }
+
 
 
   return (
-    <div className="bg-white">
-      <div className="px-8 py-4 border-b border-gray-200">
-        <h2 className="text-base font-medium text-gray-900">orders</h2>
-      </div>
+    <>
+      <OrderModal
+        order={selectedOrder}
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onSave={handleOrderSave}
+        onDelete={handleOrderDelete}
+      />
+      <div className="bg-white">
+        <div className="px-8 py-4 border-b border-gray-200">
+          <h2 className="text-base font-medium text-gray-900">orders</h2>
+        </div>
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full">
@@ -112,9 +144,9 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 key={order.id}
                 className="hover:bg-gray-50 cursor-pointer"
               >
-                <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
-                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
-                <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
+                <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => handleRowClick(order)}>{order.pavadinimas}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => handleRowClick(order)}>{order.agentura}</td>
+                <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
                   <span className={`text-sm font-medium ${
                     order.patvirtinta 
                       ? 'text-green-600' 
@@ -123,12 +155,12 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.patvirtinta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>
+                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => handleRowClick(order)}>
                   <span className="font-medium text-gray-900">{formatDate(order.dataNuo)}</span>
                   <span className="text-gray-400 mx-2">→</span>
                   <span className="font-medium text-gray-900">{formatDate(order.dataIki)}</span>
                 </td>
-                <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
+                <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
                   <span className={`text-sm font-medium ${
                     order.mediaGautas 
                       ? 'text-green-600' 
@@ -137,8 +169,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.mediaGautas ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
-                <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
+                <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => handleRowClick(order)}>{formatPrice(order.galutineKaina)}</td>
+                <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
                   <span className={`text-sm font-medium ${
                     order.saskaitaIssiusta 
                       ? 'text-green-600' 
@@ -147,8 +179,8 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.saskaitaIssiusta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
-                <td className="px-4 py-2.5 text-sm text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => handleRowClick(order)}>{order.saskaitosId}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-500" onClick={() => handleRowClick(order)}>{formatDate(order.atnaujinta)}</td>
               </tr>
             ))}
           </tbody>
@@ -236,6 +268,6 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
           Puslapis 1 iš 1 | {sortedOrders.length} įrašai
         </div>
       </div>
-    </div>
+    </>
   )
 }
