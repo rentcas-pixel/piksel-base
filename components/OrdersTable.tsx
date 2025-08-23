@@ -33,6 +33,10 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
   }
 
   const sortedOrders = useMemo(() => {
+    if (!orders || !Array.isArray(orders) || orders.length === 0) {
+      return []
+    }
+    
     return [...orders].sort((a, b) => {
       let aValue = a[sortField]
       let bValue = b[sortField]
@@ -57,11 +61,17 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
   const endIndex = startIndex + pageSize
   const currentOrders = sortedOrders.slice(startIndex, endIndex)
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('lt-LT')
+  const formatDate = (dateString: string | undefined | null) => {
+    if (!dateString) return '-'
+    try {
+      return new Date(dateString).toLocaleDateString('lt-LT')
+    } catch (error) {
+      return '-'
+    }
   }
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price: number | undefined | null) => {
+    if (price === undefined || price === null) return '0.00 €'
     return `${price.toFixed(2)} €`
   }
 
@@ -115,6 +125,15 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
     }
   }
 
+  // Loading state
+  if (!orders || orders.length === 0) {
+    return (
+      <div className="bg-white rounded-lg p-8 text-center">
+        <div className="text-gray-500">Kraunama...</div>
+      </div>
+    )
+  }
+
   return (
     <div>
       <OrderModal
@@ -128,7 +147,7 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
       
       <div className="bg-white">
         <div className="px-8 py-4 border-b border-gray-200">
-          <h2 className="text-base font-medium text-gray-900">orders</h2>
+          <h2 className="text-base font-medium text-gray-900">orders ({orders.length})</h2>
         </div>
         
         {/* Table */}
