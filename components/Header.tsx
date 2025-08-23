@@ -60,7 +60,10 @@ export default function Header() {
             <select className="border border-gray-300 rounded text-sm px-3 py-2 text-gray-700">
               <option>Rūšiuoti: Data nuo</option>
             </select>
-            <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded">
+            <button 
+              onClick={() => console.log('Pridėti mygtukas paspaustas')}
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded cursor-pointer"
+            >
               + Pridėti
             </button>
           </div>
