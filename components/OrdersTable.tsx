@@ -124,7 +124,9 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                   </span>
                 </td>
                 <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>
-                  {formatDate(order.dataNuo)} → {formatDate(order.dataIki)}
+                  <span className="font-medium text-gray-900">{formatDate(order.dataNuo)}</span>
+                  <span className="text-gray-400 mx-2">→</span>
+                  <span className="font-medium text-gray-900">{formatDate(order.dataIki)}</span>
                 </td>
                 <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
                   <span className={`text-sm font-medium ${
