@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { sampleOrders } from '../../../data/sampleOrders'
+import { supabase } from '../../../lib/supabase'
 
 // GET - gauti visus užsakymus
 export async function GET(request: NextRequest) {
@@ -8,23 +8,31 @@ export async function GET(request: NextRequest) {
     const tipas = searchParams.get('tipas')
     const search = searchParams.get('search')
 
-    let filteredOrders = [...sampleOrders]
+    let supabaseQuery = supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false })
 
-    if (tipas) {
-      filteredOrders = filteredOrders.filter(order => order.tipas === tipas)
+    if (tipas && tipas !== 'bendras') {
+      supabaseQuery = supabaseQuery.eq('tipas', tipas)
     }
 
     if (search) {
-      const query = search.toLowerCase()
-      filteredOrders = filteredOrders.filter(order =>
-        order.pavadinimas.toLowerCase().includes(query) ||
-        order.agentura.toLowerCase().includes(query) ||
-        order.saskaitosId.toLowerCase().includes(query)
+      supabaseQuery = supabaseQuery.or(
+        `pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,saskaitos_id.ilike.%${search}%`
       )
     }
 
-    return NextResponse.json(filteredOrders)
+    const { data: orders, error } = await supabaseQuery
+
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
+    }
+
+    return NextResponse.json(orders || [])
   } catch (error) {
+    console.error('Error fetching orders:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
@@ -34,16 +42,20 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
-    // Mock response for initial deployment
-    const mockOrder = {
-      id: Date.now().toString(),
-      ...body,
-      sukurtas: new Date().toISOString(),
-      atnaujintas: new Date().toISOString()
+    const { data: order, error } = await supabase
+      .from('orders')
+      .insert([body])
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Supabase error:', error)
+      return NextResponse.json({ error: 'Failed to create order' }, { status: 500 })
     }
 
-    return NextResponse.json(mockOrder, { status: 201 })
+    return NextResponse.json(order, { status: 201 })
   } catch (error) {
+    console.error('Error creating order:', error)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

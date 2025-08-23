@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { supabase } from '../../../lib/supabase'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,25 +15,44 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Simuliuojame failo upload (development mode)
-    const timestamp = Date.now()
-    const fileExtension = file.name.split('.').pop()
-    const fileName = `${orderId}_${timestamp}.${fileExtension}`
+    // Upload file to Supabase Storage
+    const fileName = `${Date.now()}-${file.name}`
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('piksel-files')
+      .upload(fileName, file)
 
-    // Grąžiname mock response
-    return NextResponse.json({
-      success: true,
-      file: {
-        id: `mock_${timestamp}`,
+    if (uploadError) {
+      console.error('Storage upload error:', uploadError)
+      return NextResponse.json({ error: 'Failed to upload file to storage' }, { status: 500 })
+    }
+
+    // Get public URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('piksel-files')
+      .getPublicUrl(fileName)
+
+    // Save file metadata to database
+    const { data: fileRecord, error: dbError } = await supabase
+      .from('files')
+      .insert([{
         order_id: parseInt(orderId),
         filename: file.name,
-        file_path: `mock/orders/${orderId}/${fileName}`,
-        file_type: file.type,
+        file_path: publicUrl,
         file_size: file.size,
-        uploaded_by: uploadedBy,
-        uploaded_at: new Date().toISOString()
-      },
-      url: `https://mock-storage.com/orders/${orderId}/${fileName}`
+        mime_type: file.type
+      }])
+      .select()
+      .single()
+
+    if (dbError) {
+      console.error('Database error:', dbError)
+      return NextResponse.json({ error: 'Failed to save file metadata' }, { status: 500 })
+    }
+
+    return NextResponse.json({
+      success: true,
+      file: fileRecord,
+      url: publicUrl
     })
 
   } catch (error) {
