@@ -86,8 +86,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 { key: 'pavadinimas', label: 'Client' },
                 { key: 'agentura', label: 'Agency' },
                 { key: 'patvirtinta', label: 'Approved' },
-                { key: 'dataNuo', label: 'From' },
-                { key: 'dataIki', label: 'To' },
+                { key: 'periodas', label: 'Period' },
                 { key: 'mediaGautas', label: 'Media Received' },
                 { key: 'galutineKaina', label: 'Final Price' },
                 { key: 'saskaitaIssiusta', label: 'Invoice Sent' },
@@ -124,8 +123,9 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                     {order.patvirtinta ? 'True' : 'False'}
                   </span>
                 </td>
-                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
-                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
+                <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>
+                  {formatDate(order.dataNuo)} → {formatDate(order.dataIki)}
+                </td>
                 <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
                   <span className={`text-sm font-medium ${
                     order.mediaGautas 
