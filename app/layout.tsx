@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   keywords: 'užsakymai, valdymas, ekranai, viadukai, piksel',
   authors: [{ name: 'Piksel Base Team' }],
   viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
@@ -16,6 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="lt">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className="min-h-screen bg-neutral-50">
         {children}
       </body>
