@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
     if (search) {
       supabaseQuery = supabaseQuery.or(
-        `pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,saskaitos_id.ilike.%${search}%`
+        `pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,saskaitosId.ilike.%${search}%`
       )
     }
 
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
       mediaGautas: order.media_gautas,
       galutineKaina: order.galutine_kaina,
       saskaitaIssiusta: order.saskaita_issiusta,
-      saskaitosId: order.saskaitos_id,
+      saskaitosId: order.saskaitosId,
       komentaras: order.komentaras,
       atnaujinta: order.updated_at,
       created_at: order.created_at,
@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+    console.log('Received request body:', body)
     
     // Convert camelCase to snake_case for Supabase
     const supabaseOrder = {
@@ -73,7 +74,7 @@ export async function POST(request: NextRequest) {
       media_gautas: body.mediaGautas || false,
       galutine_kaina: body.galutineKaina || 0,
       saskaita_issiusta: body.saskaitaIssiusta || false,
-      saskaitos_id: body.saskaitosId,
+      saskaitosId: body.saskaitosId, // Keep camelCase as per database schema
       komentaras: body.komentaras || '',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
