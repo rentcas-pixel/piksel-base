@@ -2,10 +2,12 @@
 
 import { Search, Plus, RefreshCw, Settings, User, LogOut } from 'lucide-react'
 import { useState } from 'react'
+import AddOrderModal from './AddOrderModal'
 
-export default function Header() {
+export default function Header({ onAddOrder, activeTab }: { onAddOrder: (order: any) => void, activeTab: 'bendras' | 'ekranai' | 'viadukai' }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -61,7 +63,7 @@ export default function Header() {
               <option>Rūšiuoti: Data nuo</option>
             </select>
             <button 
-              onClick={() => console.log('Pridėti mygtukas paspaustas')}
+              onClick={() => setIsAddModalOpen(true)}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded cursor-pointer"
             >
               + Pridėti
@@ -69,6 +71,14 @@ export default function Header() {
           </div>
         </div>
       </div>
+      
+      {/* Add Order Modal */}
+      <AddOrderModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={onAddOrder}
+        activeTab={activeTab}
+      />
     </header>
   )
 }

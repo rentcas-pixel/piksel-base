@@ -73,13 +73,35 @@ export default function HomePage() {
     window.location.reload()
   }
 
+  const handleAddOrder = async (newOrder: Partial<Order>) => {
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newOrder),
+      })
+
+      if (response.ok) {
+        // Refresh the page to show new order
+        window.location.reload()
+      } else {
+        throw new Error('Failed to add order')
+      }
+    } catch (error) {
+      console.error('Error adding order:', error)
+      alert('Klaida pridedant užsakymą')
+    }
+  }
+
   const handleSearch = (query: string) => {
     setSearchQuery(query)
   }
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      <Header />
+      <Header onAddOrder={handleAddOrder} activeTab={activeTab} />
       <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
       
       <main className="w-full px-8 lg:px-12 py-8">
