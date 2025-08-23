@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="lt">
       <head>
-        <link rel="manifest" href="/manifest.json" />
+        {/* Manifest temporarily disabled due to 401 error */}
       </head>
       <body className="min-h-screen bg-neutral-50">
         {children}

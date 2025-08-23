@@ -62,6 +62,9 @@ export async function POST(request: NextRequest) {
   try {
     // Test Supabase connection
     console.log('Testing Supabase connection...')
+    console.log('Supabase URL:', supabase.supabaseUrl)
+    console.log('Supabase Key length:', supabase.supabaseKey?.length || 'No key')
+    
     const { data: testData, error: testError } = await supabase
       .from('orders')
       .select('id')
@@ -72,7 +75,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Database connection failed', details: testError.message }, { status: 500 })
     }
     
-    console.log('Supabase connection successful')
+    console.log('Supabase connection successful, test data:', testData)
     
     const body = await request.json()
     console.log('Received request body:', body)
