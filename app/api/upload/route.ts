@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '../../../lib/supabase'
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,54 +14,25 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Sukurti unikalų failo pavadinimą
+    // Simuliuojame failo upload (development mode)
     const timestamp = Date.now()
     const fileExtension = file.name.split('.').pop()
     const fileName = `${orderId}_${timestamp}.${fileExtension}`
-    const filePath = `orders/${orderId}/${fileName}`
 
-    // Upload failą į Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from('order-files')
-      .upload(filePath, file)
-
-    if (uploadError) {
-      return NextResponse.json(
-        { error: uploadError.message },
-        { status: 500 }
-      )
-    }
-
-    // Gauti failo URL
-    const { data: urlData } = supabase.storage
-      .from('order-files')
-      .getPublicUrl(filePath)
-
-    // Išsaugoti failo informaciją duomenų bazėje
-    const { data: fileRecord, error: dbError } = await supabase
-      .from('files')
-      .insert([{
-        order_id: parseInt(orderId),
-        filename: file.name,
-        file_path: filePath,
-        file_type: file.type,
-        file_size: file.size,
-        uploaded_by: uploadedBy
-      }])
-      .select()
-      .single()
-
-    if (dbError) {
-      return NextResponse.json(
-        { error: dbError.message },
-        { status: 500 }
-      )
-    }
-
+    // Grąžiname mock response
     return NextResponse.json({
       success: true,
-      file: fileRecord,
-      url: urlData.publicUrl
+      file: {
+        id: `mock_${timestamp}`,
+        order_id: parseInt(orderId),
+        filename: file.name,
+        file_path: `mock/orders/${orderId}/${fileName}`,
+        file_type: file.type,
+        file_size: file.size,
+        uploaded_by: uploadedBy,
+        uploaded_at: new Date().toISOString()
+      },
+      url: `https://mock-storage.com/orders/${orderId}/${fileName}`
     })
 
   } catch (error) {

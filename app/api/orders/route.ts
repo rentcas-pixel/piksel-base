@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '../../../lib/supabase'
+import { sampleOrders } from '../../../data/sampleOrders'
 
 // GET - gauti visus užsakymus
 export async function GET(request: NextRequest) {
@@ -8,26 +8,22 @@ export async function GET(request: NextRequest) {
     const tipas = searchParams.get('tipas')
     const search = searchParams.get('search')
 
-    let query = supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false })
+    let filteredOrders = [...sampleOrders]
 
     if (tipas) {
-      query = query.eq('tipas', tipas)
+      filteredOrders = filteredOrders.filter(order => order.tipas === tipas)
     }
 
     if (search) {
-      query = query.or(`pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,saskaitos_id.ilike.%${search}%`)
+      const query = search.toLowerCase()
+      filteredOrders = filteredOrders.filter(order =>
+        order.pavadinimas.toLowerCase().includes(query) ||
+        order.agentura.toLowerCase().includes(query) ||
+        order.saskaitos_id.toLowerCase().includes(query)
+      )
     }
 
-    const { data, error } = await query
-
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
-    return NextResponse.json(data)
+    return NextResponse.json(filteredOrders)
   } catch (error) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

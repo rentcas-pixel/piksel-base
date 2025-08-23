@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react'
 import { Upload, X, File, Image, FileText, Download } from 'lucide-react'
-import { supabase } from '../lib/supabase'
 
 interface FileUploadProps {
   orderId: number
@@ -26,17 +25,22 @@ export default function FileUpload({ orderId, onFileUploaded }: FileUploadProps)
   const [uploadProgress, setUploadProgress] = useState(0)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  // Gauti esamus failus
+  // Gauti esamus failus (mock data)
   const fetchFiles = async () => {
-    const { data, error } = await supabase
-      .from('files')
-      .select('*')
-      .eq('order_id', orderId)
-      .order('uploaded_at', { ascending: false })
-
-    if (!error && data) {
-      setFiles(data)
-    }
+    // Mock files data
+    const mockFiles = [
+      {
+        id: 'mock_1',
+        order_id: orderId,
+        filename: 'screenshot.png',
+        file_path: 'mock/orders/1/screenshot.png',
+        file_type: 'image/png',
+        file_size: 1024000,
+        uploaded_at: new Date().toISOString(),
+        uploaded_by: 'user@example.com'
+      }
+    ]
+    setFiles(mockFiles)
   }
 
   // Failo upload
@@ -95,21 +99,11 @@ export default function FileUpload({ orderId, onFileUploaded }: FileUploadProps)
     selectedFiles.forEach(uploadFile)
   }
 
-  // Delete file
+  // Delete file (mock)
   const deleteFile = async (fileId: string, filePath: string) => {
     try {
-      // Delete from storage
-      await supabase.storage
-        .from('order-files')
-        .remove([filePath])
-
-      // Delete from database
-      await supabase
-        .from('files')
-        .delete()
-        .eq('id', fileId)
-
-      await fetchFiles()
+      // Mock delete - just remove from local state
+      setFiles(files.filter(f => f.id !== fileId))
     } catch (error) {
       console.error('Delete error:', error)
     }
@@ -215,11 +209,8 @@ export default function FileUpload({ orderId, onFileUploaded }: FileUploadProps)
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => {
-                      // Download file
-                      const url = supabase.storage
-                        .from('order-files')
-                        .getPublicUrl(file.file_path).data.publicUrl
-                      window.open(url, '_blank')
+                      // Mock download
+                      alert(`Mock download: ${file.filename}`)
                     }}
                     className="p-1 text-neutral-400 hover:text-neutral-600"
                     title="Atsisiųsti"
