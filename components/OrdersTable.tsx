@@ -107,16 +107,16 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 />
               </th>
               {[
-                { key: 'pavadinimas', label: 'CLIENT' },
-                { key: 'agentura', label: 'AGENCY' },
-                { key: 'patvirtinta', label: 'APPROVED' },
-                { key: 'dataNuo', label: 'PERÍODAS' },
-                { key: 'dataIki', label: '' },
-                { key: 'mediaGautas', label: 'MEDIA RECEIVED' },
-                { key: 'galutineKaina', label: 'FINAL PRICE' },
-                { key: 'saskaitaIssiusta', label: 'INVOICE SENT' },
-                { key: 'saskaitosId', label: 'INVOICE ID' },
-                { key: 'atnaujinta', label: 'UPDATE' }
+                { key: 'pavadinimas', label: 'Client' },
+                { key: 'agentura', label: 'Agency' },
+                { key: 'patvirtinta', label: 'Approved' },
+                { key: 'dataNuo', label: 'Period - From' },
+                { key: 'dataIki', label: 'Period - To' },
+                { key: 'mediaGautas', label: 'Media Received' },
+                { key: 'galutineKaina', label: 'Final Price' },
+                { key: 'saskaitaIssiusta', label: 'Invoice Sent' },
+                { key: 'saskaitosId', label: 'Invoice ID' },
+                { key: 'atnaujinta', label: 'Update' }
               ].map(({ key, label }) => (
                 <th
                   key={key}
