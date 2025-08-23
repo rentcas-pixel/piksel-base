@@ -2,7 +2,6 @@
 
 import { Search, Plus, RefreshCw, Settings, User, LogOut } from 'lucide-react'
 import { useState } from 'react'
-import Image from 'next/image'
 
 export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -28,11 +27,9 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo ir pavadinimas */}
           <div className="flex items-center">
-            <Image 
+            <img 
               src="/logo.png" 
               alt="Piksel Base Logo" 
-              width={120}
-              height={32}
               className="h-8 w-auto"
             />
           </div>
