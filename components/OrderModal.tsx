@@ -9,7 +9,7 @@ interface OrderModalProps {
   isOpen: boolean
   onClose: () => void
   onSave: (updatedOrder: Order) => void
-  onDelete: (orderId: string) => void
+  onDelete: (orderId: number) => void
 }
 
 export default function OrderModal({ order, isOpen, onClose, onSave, onDelete }: OrderModalProps) {
