@@ -17,7 +17,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const [selectedOrders, setSelectedOrders] = useState<Set<number>>(new Set())
+
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -70,23 +70,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
     )
   }
 
-  const handleSelectOrder = (orderId: number) => {
-    const newSelected = new Set(selectedOrders)
-    if (newSelected.has(orderId)) {
-      newSelected.delete(orderId)
-    } else {
-      newSelected.add(orderId)
-    }
-    setSelectedOrders(newSelected)
-  }
 
-  const handleSelectAll = () => {
-    if (selectedOrders.size === currentOrders.length) {
-      setSelectedOrders(new Set())
-    } else {
-      setSelectedOrders(new Set(currentOrders.map(order => order.id)))
-    }
-  }
 
   return (
     <div className="bg-white">
@@ -98,14 +82,6 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
         <table className="min-w-full">
           <thead className="bg-gray-50 border-b border-gray-200">
             <tr>
-              <th className="w-6 px-4 py-3">
-                <input
-                  type="checkbox"
-                  checked={selectedOrders.size === currentOrders.length && currentOrders.length > 0}
-                  onChange={handleSelectAll}
-                  className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-              </th>
               {[
                 { key: 'pavadinimas', label: 'Client' },
                 { key: 'agentura', label: 'Agency' },
@@ -137,17 +113,6 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
                 key={order.id}
                 className="hover:bg-gray-50 cursor-pointer"
               >
-                <td className="w-6 px-4 py-2.5">
-                  <input
-                    type="checkbox"
-                    checked={selectedOrders.has(order.id)}
-                    onChange={(e) => {
-                      e.stopPropagation()
-                      handleSelectOrder(order.id)
-                    }}
-                    className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                </td>
                 <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
                 <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
                 <td className="px-4 py-2.5" onClick={() => onOrderClick(order)}>
