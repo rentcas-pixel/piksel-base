@@ -17,6 +17,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+  const [selectedOrders, setSelectedOrders] = useState<Set<number>>(new Set())
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -69,13 +70,39 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
     )
   }
 
+  const handleSelectOrder = (orderId: number) => {
+    const newSelected = new Set(selectedOrders)
+    if (newSelected.has(orderId)) {
+      newSelected.delete(orderId)
+    } else {
+      newSelected.add(orderId)
+    }
+    setSelectedOrders(newSelected)
+  }
+
+  const handleSelectAll = () => {
+    if (selectedOrders.size === currentOrders.length) {
+      setSelectedOrders(new Set())
+    } else {
+      setSelectedOrders(new Set(currentOrders.map(order => order.id)))
+    }
+  }
+
   return (
-    <div className="bg-white rounded-lg shadow-card overflow-hidden">
+    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-neutral-200">
-          <thead className="bg-neutral-50">
-            <tr>
+        <table className="min-w-full">
+          <thead className="bg-gray-50">
+            <tr className="border-b border-gray-200">
+              <th className="w-4 px-2 py-1.5">
+                <input
+                  type="checkbox"
+                  checked={selectedOrders.size === currentOrders.length && currentOrders.length > 0}
+                  onChange={handleSelectAll}
+                  className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+              </th>
               {[
                 { key: 'pavadinimas', label: 'Pavadinimas' },
                 { key: 'agentura', label: 'Agentūra' },
@@ -90,7 +117,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ].map(({ key, label }) => (
                 <th
                   key={key}
-                  className="table-header cursor-pointer hover:bg-neutral-100 transition-colors duration-150"
+                  className="px-2 py-1.5 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100 transition-colors duration-150"
                   onClick={() => handleSort(key as SortField)}
                 >
                   <div className="flex items-center space-x-0.5">
@@ -101,35 +128,57 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-neutral-200">
+          <tbody className="bg-white divide-y divide-gray-100">
             {currentOrders.map((order) => (
               <tr
                 key={order.id}
-                className="table-row"
-                onClick={() => onOrderClick(order)}
+                className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer border-b border-gray-100"
               >
-                <td className="table-cell font-medium">{order.pavadinimas}</td>
-                <td className="table-cell">{order.agentura}</td>
-                <td className="table-cell">
-                  <span className={`status-badge ${order.patvirtinta ? 'status-success' : 'status-danger'}`}>
-                    {order.patvirtinta ? 'Taip' : 'Ne'}
+                <td className="w-4 px-2 py-1.5">
+                  <input
+                    type="checkbox"
+                    checked={selectedOrders.has(order.id)}
+                    onChange={(e) => {
+                      e.stopPropagation()
+                      handleSelectOrder(order.id)
+                    }}
+                    className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                </td>
+                <td className="px-2 py-1.5 text-xs font-medium text-gray-900" onClick={() => onOrderClick(order)}>{order.pavadinimas}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{order.agentura}</td>
+                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
+                  <span className={`inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                    order.patvirtinta 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-red-100 text-red-800'
+                  }`}>
+                    {order.patvirtinta ? 'Patvirtinta' : 'Laukiama'}
                   </span>
                 </td>
-                <td className="table-cell">{formatDate(order.dataNuo)}</td>
-                <td className="table-cell">{formatDate(order.dataIki)}</td>
-                <td className="table-cell">
-                  <span className={`status-badge ${order.mediaGautas ? 'status-success' : 'status-danger'}`}>
+                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataNuo)}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-700" onClick={() => onOrderClick(order)}>{formatDate(order.dataIki)}</td>
+                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
+                  <span className={`inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                    order.mediaGautas 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-red-100 text-red-800'
+                  }`}>
                     {order.mediaGautas ? 'Taip' : 'Ne'}
                   </span>
                 </td>
-                <td className="table-cell font-medium">{formatPrice(order.galutineKaina)}</td>
-                <td className="table-cell">
-                  <span className={`status-badge ${order.saskaitaIssiusta ? 'status-success' : 'status-danger'}`}>
+                <td className="px-2 py-1.5 text-xs font-medium text-gray-900" onClick={() => onOrderClick(order)}>{formatPrice(order.galutineKaina)}</td>
+                <td className="px-2 py-1.5" onClick={() => onOrderClick(order)}>
+                  <span className={`inline-flex px-1.5 py-0.5 rounded-full text-xs font-medium ${
+                    order.saskaitaIssiusta 
+                      ? 'bg-green-100 text-green-800' 
+                      : 'bg-red-100 text-red-800'
+                  }`}>
                     {order.saskaitaIssiusta ? 'Taip' : 'Ne'}
                   </span>
                 </td>
-                <td className="table-cell font-mono text-xs">{order.saskaitosId}</td>
-                <td className="table-cell text-neutral-500">{formatDate(order.atnaujinta)}</td>
+                <td className="px-2 py-1.5 text-xs font-mono text-gray-600" onClick={() => onOrderClick(order)}>{order.saskaitosId}</td>
+                <td className="px-2 py-1.5 text-xs text-gray-500" onClick={() => onOrderClick(order)}>{formatDate(order.atnaujinta)}</td>
               </tr>
             ))}
           </tbody>
@@ -137,7 +186,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Pagination */}
-      <div className="bg-white px-3 py-2 flex items-center justify-between border-t border-neutral-200 sm:px-4">
+      <div className="bg-gray-50 px-3 py-2 flex items-center justify-between border-t border-gray-200 sm:px-4">
         <div className="flex-1 flex justify-between sm:hidden">
           <button
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
@@ -199,7 +248,7 @@ export default function OrdersTable({ orders, onOrderClick }: OrdersTableProps) 
       </div>
 
       {/* Page size selector */}
-      <div className="bg-neutral-50 px-3 py-2 border-t border-neutral-200">
+      <div className="bg-gray-50 px-3 py-2 border-t border-gray-200">
         <div className="flex items-center space-x-2">
           <label htmlFor="page-size" className="text-xs text-neutral-700">
             Puslapio dydis:
