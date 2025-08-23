@@ -58,70 +58,7 @@ export default function HomePage() {
           onOrderClick={handleOrderClick} 
         />
 
-        {/* Statistikos kortelės */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-white rounded-lg shadow-card p-8">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <span className="text-primary-600 text-xl">📊</span>
-                </div>
-              </div>
-              <div className="ml-6">
-                <p className="text-base font-medium text-neutral-500">Iš viso užsakymų</p>
-                <p className="text-3xl font-semibold text-neutral-900">{filteredOrders.length}</p>
-              </div>
-            </div>
-          </div>
 
-          <div className="bg-white rounded-lg shadow-card p-8">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-success-100 rounded-lg flex items-center justify-center">
-                  <span className="text-success-600 text-xl">✅</span>
-                </div>
-              </div>
-              <div className="ml-6">
-                <p className="text-base font-medium text-neutral-500">Patvirtinti</p>
-                <p className="text-3xl font-semibold text-neutral-900">
-                  {filteredOrders.filter(o => o.patvirtinta).length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-card p-8">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-warning-100 rounded-lg flex items-center justify-center">
-                  <span className="text-warning-600 text-xl">💰</span>
-                </div>
-              </div>
-              <div className="ml-6">
-                <p className="text-base font-medium text-neutral-500">Bendra suma</p>
-                <p className="text-3xl font-semibold text-neutral-900">
-                  {filteredOrders.reduce((sum, o) => sum + o.galutineKaina, 0).toFixed(0)} €
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-card p-8">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-10 h-10 bg-danger-100 rounded-lg flex items-center justify-center">
-                  <span className="text-warning-600 text-xl">📋</span>
-                </div>
-              </div>
-              <div className="ml-6">
-                <p className="text-base font-medium text-neutral-500">Laukia patvirtinimo</p>
-                <p className="text-3xl font-semibold text-neutral-900">
-                  {filteredOrders.filter(o => !o.patvirtinta).length}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
       </main>
     </div>
   )
