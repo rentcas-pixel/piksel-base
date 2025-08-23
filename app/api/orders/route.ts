@@ -60,27 +60,49 @@ export async function GET(request: NextRequest) {
 // POST - sukurti naują užsakymą
 export async function POST(request: NextRequest) {
   try {
+    // Test Supabase connection
+    console.log('Testing Supabase connection...')
+    const { data: testData, error: testError } = await supabase
+      .from('orders')
+      .select('id')
+      .limit(1)
+    
+    if (testError) {
+      console.error('Supabase connection test failed:', testError)
+      return NextResponse.json({ error: 'Database connection failed', details: testError.message }, { status: 500 })
+    }
+    
+    console.log('Supabase connection successful')
+    
     const body = await request.json()
     console.log('Received request body:', body)
+    
+    // Validate required fields
+    if (!body.pavadinimas || !body.agentura || !body.dataNuo || !body.dataIki) {
+      console.error('Missing required fields:', { pavadinimas: !!body.pavadinimas, agentura: !!body.agentura, dataNuo: !!body.dataNuo, dataIki: !!body.dataIki })
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
     
     // Convert camelCase to snake_case for Supabase
     const supabaseOrder = {
       pavadinimas: body.pavadinimas,
       agentura: body.agentura,
-      tipas: body.tipas,
+      tipas: body.tipas || 'ekranai',
       patvirtinta: body.patvirtinta || false,
       data_nuo: body.dataNuo,
       data_iki: body.dataIki,
       media_gautas: body.mediaGautas || false,
-      galutine_kaina: body.galutineKaina || 0,
+      galutine_kaina: parseFloat(body.galutineKaina) || 0,
       saskaita_issiusta: body.saskaitaIssiusta || false,
-      saskaitosId: body.saskaitosId, // Keep camelCase as per database schema
+      saskaitosId: body.saskaitosId || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
       komentaras: body.komentaras || '',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     }
     
     console.log('Sending to Supabase:', supabaseOrder)
+    
+    console.log('Attempting to insert into Supabase...')
     
     const { data: order, error } = await supabase
       .from('orders')
@@ -89,10 +111,17 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (error) {
-      console.error('Supabase error:', error)
+      console.error('Supabase error details:', {
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+        code: error.code
+      })
       const errorMessage = error.message || 'Supabase error'
       return NextResponse.json({ error: 'Failed to create order', details: errorMessage }, { status: 500 })
     }
+    
+    console.log('Successfully inserted order:', order)
 
     return NextResponse.json(order, { status: 201 })
   } catch (error) {
