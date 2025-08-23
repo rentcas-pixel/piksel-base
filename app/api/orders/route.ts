@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       filteredOrders = filteredOrders.filter(order =>
         order.pavadinimas.toLowerCase().includes(query) ||
         order.agentura.toLowerCase().includes(query) ||
-        order.saskaitos_id.toLowerCase().includes(query)
+        order.saskaitosId.toLowerCase().includes(query)
       )
     }
 
