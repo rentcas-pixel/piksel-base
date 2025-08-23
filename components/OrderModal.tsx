@@ -77,9 +77,9 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
       <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
         {/* Header - Pixelmator Pro Style */}
         <div className="bg-white border border-gray-200 rounded-t-lg p-6 relative">
-          {/* Tab indicator - small text above */}
+          {/* Tab indicator with order number - small text above */}
           <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
-            {activeTab === 'ekranai' ? 'Ekranai' : 'Viadukai'}
+            {activeTab === 'ekranai' ? 'EKRANAI' : 'VIADUKAI'} - {order.id}
           </div>
           
           {/* Main title */}
