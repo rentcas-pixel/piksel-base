@@ -4,10 +4,11 @@ import { Order } from '../../../../types/order'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = parseInt(params.id)
+    const { id } = await params
+    const orderId = parseInt(id)
     const updatedOrder: Partial<Order> = await request.json()
 
     // Update order in Supabase
@@ -44,10 +45,11 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const orderId = parseInt(params.id)
+    const { id } = await params
+    const orderId = parseInt(id)
 
     // Delete order from Supabase
     const { error } = await supabase
