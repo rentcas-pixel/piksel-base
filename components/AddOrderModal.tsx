@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { X, Calendar, FileText, AlertCircle } from 'lucide-react'
+import { X, FileText, AlertCircle } from 'lucide-react'
 import { Order } from '../types/order'
+import CustomDatePicker from './DatePicker'
 
 interface AddOrderModalProps {
   isOpen: boolean
@@ -17,8 +18,8 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
     agentura: '',
     tipas: activeTab === 'bendras' ? 'ekranai' : activeTab,
     patvirtinta: false,
-    dataNuo: '',
-    dataIki: '',
+    dataNuo: null,
+    dataIki: null,
     mediaGautas: false,
     galutineKaina: 0,
     saskaitaIssiusta: false,
@@ -41,6 +42,8 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
     
     const newOrder = {
       ...formData,
+      dataNuo: formData.dataNuo ? formData.dataNuo.toISOString().split('T')[0] : '',
+      dataIki: formData.dataIki ? formData.dataIki.toISOString().split('T')[0] : '',
       saskaitosId: orderNo,
       atnaujinta: new Date().toISOString()
     }
@@ -196,28 +199,23 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
           {/* Row 3: Data nuo, Data iki */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Data Nuo *
-              </label>
-              <input
-                type="date"
+              <CustomDatePicker
+                selected={formData.dataNuo}
+                onChange={(date) => handleInputChange('dataNuo', date)}
+                label="Data Nuo"
                 required
-                value={formData.dataNuo}
-                onChange={(e) => handleInputChange('dataNuo', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                placeholderText="Pasirinkite pradžios datą"
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Data Iki *
-              </label>
-              <input
-                type="date"
+              <CustomDatePicker
+                selected={formData.dataIki}
+                onChange={(date) => handleInputChange('dataIki', date)}
+                label="Data Iki"
                 required
-                value={formData.dataIki}
-                onChange={(e) => handleInputChange('dataIki', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                placeholderText="Pasirinkite pabaigos datą"
+                minDate={formData.dataNuo}
               />
             </div>
           </div>
