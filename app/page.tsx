@@ -75,7 +75,9 @@ export default function HomePage() {
 
   const handleAddOrder = async (newOrder: Partial<Order>) => {
     try {
-      const response = await fetch('/api/orders', {
+      console.log('🚀 Attempting to add order via MOCK API...')
+      
+      const response = await fetch('/api/orders-mock', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,13 +86,19 @@ export default function HomePage() {
       })
 
       if (response.ok) {
-        // Refresh the page to show new order
-        window.location.reload()
+        const createdOrder = await response.json()
+        console.log('✅ Order created successfully:', createdOrder)
+        
+        // Add to local state instead of page reload
+        setOrders(prev => [createdOrder, ...prev])
+        
+        // Show success message
+        alert('Užsakymas sėkmingai pridėtas!')
       } else {
         throw new Error('Failed to add order')
       }
     } catch (error) {
-      console.error('Error adding order:', error)
+      console.error('❌ Error adding order:', error)
       alert('Klaida pridedant užsakymą')
     }
   }
