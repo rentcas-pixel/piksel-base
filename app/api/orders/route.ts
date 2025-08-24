@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
     // Add search if specified
     if (search) {
-      query = query.or(`pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,orderNo.ilike.%${search}%,komentaras.ilike.%${search}%`)
+      query = query.or(`pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,order_no.ilike.%${search}%,komentaras.ilike.%${search}%`)
     }
 
     const { data: orders, error } = await query.order('created_at', { ascending: false })
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
       mediaGautas: order.media_gautas,
       galutineKaina: order.galutine_kaina,
       saskaitaIssiusta: order.saskaita_issiusta,
-      orderNo: order.orderNo,
+      orderNo: order.order_no,
       komentaras: order.komentaras,
       atnaujinta: order.updated_at,
       created_at: order.created_at,
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
       media_gautas: body.mediaGautas || false,
       galutine_kaina: parseFloat(body.galutineKaina) || 0,
       saskaita_issiusta: body.saskaitaIssiusta || false,
-      orderNo: body.orderNo || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+      order_no: body.orderNo || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
       komentaras: body.komentaras || '',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
       mediaGautas: order.media_gautas,
       galutineKaina: order.galutine_kaina,
       saskaitaIssiusta: order.saskaita_issiusta,
-      orderNo: order.orderNo,
+      orderNo: order.order_no,
       komentaras: order.komentaras,
       atnaujinta: order.updated_at,
       created_at: order.created_at,
