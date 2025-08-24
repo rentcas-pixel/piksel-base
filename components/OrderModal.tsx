@@ -33,7 +33,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
         mediaGautas: order.mediaGautas,
         galutineKaina: order.galutineKaina,
         saskaitaIssiusta: order.saskaitaIssiusta,
-        saskaitosId: order.saskaitosId,
+        orderNo: order.orderNo,
         atnaujinta: order.atnaujinta
       })
       setComment(order.komentaras || '')
@@ -104,10 +104,10 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
           {/* Tab indicator with order number - small text above */}
           <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
             {activeTab === 'bendras' 
-              ? `UŽSAKYMAS - ${order.saskaitosId}`
+              ? `UŽSAKYMAS - ${order.orderNo}`
               : activeTab === 'ekranai' 
-                ? `EKRANAI - ${order.saskaitosId}`
-                : `VIADUKAI - ${order.saskaitosId}`
+                ? `EKRANAI - ${order.orderNo}`
+                : `VIADUKAI - ${order.orderNo}`
             }
           </div>
           
