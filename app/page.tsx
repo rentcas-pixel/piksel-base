@@ -125,7 +125,8 @@ export default function HomePage() {
       }
     } catch (error) {
       console.error('❌ Error adding order:', error)
-      alert(`Klaida pridedant užsakymą: ${error.message}`)
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      alert(`Klaida pridedant užsakymą: ${errorMessage}`)
     }
   }
 
