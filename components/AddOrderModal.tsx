@@ -154,7 +154,7 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
             </div>
 
             {/* Row 1: Approve, Media received, Invoice sent - all in one row */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
                   Patvirtinta
@@ -244,7 +244,7 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
             </div>
 
             {/* Datos */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Data nuo

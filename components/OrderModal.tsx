@@ -126,7 +126,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
           {/* Toggle switches - PocketBase stilius */}
           <div className="space-y-6">
             {/* Row 1: Approve, Media received, Invoice sent - all in one row */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
                   Patvirtinta
@@ -216,7 +216,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
             </div>
 
             {/* Row 3: Data nuo, Data iki */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Data nuo
@@ -281,7 +281,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Priminimas
               </label>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <input
                   type="date"
                   className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
