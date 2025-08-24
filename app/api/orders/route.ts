@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
       media_gautas: body.mediaGautas || false,
       galutine_kaina: parseFloat(body.galutineKaina) || 0,
       saskaita_issiusta: body.saskaitaIssiusta || false,
-      saskaitosId: body.saskaitosId || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+                   orderNo: body.orderNo || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
       komentaras: body.komentaras || '',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
@@ -138,7 +138,7 @@ export async function POST(request: NextRequest) {
       mediaGautas: order.media_gautas,
       galutineKaina: order.galutine_kaina,
       saskaitaIssiusta: order.saskaita_issiusta,
-      saskaitosId: order.saskaitosId,
+      orderNo: order.orderNo,
       komentaras: order.komentaras,
       atnaujinta: order.updated_at,
       created_at: order.created_at,

@@ -8,7 +8,7 @@ export interface Order {
   mediaGautas: boolean
   galutineKaina: number
   saskaitaIssiusta: boolean
-  saskaitosId: string
+  orderNo: string
   atnaujinta: string
   tipas: 'ekranai' | 'viadukai'
   komentaras?: string

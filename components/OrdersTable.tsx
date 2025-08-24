@@ -173,7 +173,7 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                 {[
                   { key: 'pavadinimas', label: 'Client' },
                   { key: 'agentura', label: 'Agency' },
-                  { key: 'saskaitosId', label: 'Order No' },
+                  { key: 'orderNo', label: 'Order No' },
                   { key: 'patvirtinta', label: 'Approved' },
                   { key: 'periodas', label: 'Period' },
                   { key: 'mediaGautas', label: 'Media Received' },
@@ -207,7 +207,7 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                     {order.agentura}
                   </td>
                   <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => handleRowClick(order)}>
-                    {order.saskaitosId}
+                    {order.orderNo}
                   </td>
                   <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
                     <span className={`text-sm font-medium ${

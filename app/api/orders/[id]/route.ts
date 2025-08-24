@@ -24,6 +24,7 @@ export async function PUT(
         media_gautas: updatedOrder.mediaGautas,
         galutine_kaina: updatedOrder.galutineKaina,
         saskaita_issiusta: updatedOrder.saskaitaIssiusta,
+        orderNo: updatedOrder.orderNo,
         komentaras: updatedOrder.komentaras,
         atnaujinta: new Date().toISOString()
       })

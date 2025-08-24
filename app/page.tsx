@@ -65,7 +65,7 @@ export default function HomePage() {
       filtered = filtered.filter(order =>
         order.pavadinimas.toLowerCase().includes(query) ||
         order.agentura.toLowerCase().includes(query) ||
-        order.saskaitosId.toLowerCase().includes(query) ||
+                       order.orderNo.toLowerCase().includes(query) ||
         order.komentaras?.toLowerCase().includes(query)
       )
     }

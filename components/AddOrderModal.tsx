@@ -23,7 +23,7 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
     mediaGautas: false,
     galutineKaina: 0,
     saskaitaIssiusta: false,
-    saskaitosId: '',
+    orderNo: '',
     komentaras: ''
   })
 
@@ -42,7 +42,7 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
     
     const newOrder = {
       ...formData,
-      saskaitosId: orderNo,
+      orderNo: orderNo,
       atnaujinta: new Date().toISOString()
     }
     
@@ -60,7 +60,7 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
       mediaGautas: false,
       galutineKaina: 0,
       saskaitaIssiusta: false,
-      saskaitosId: '',
+      orderNo: '',
       komentaras: ''
     })
   }
