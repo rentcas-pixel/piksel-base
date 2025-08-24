@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import Tabs from '../components/Tabs'
 import OrdersTable from '../components/OrdersTable'
 import ImportButton from '../components/ImportButton'
+import CSVImportButton from '../components/CSVImportButton'
 import { Order, OrderFilters } from '../types/order'
 
 export default function HomePage() {
@@ -142,6 +143,7 @@ export default function HomePage() {
       
       <main className="w-full px-8 lg:px-12 py-8">
         <ImportButton />
+        <CSVImportButton />
         
         {/* Užsakymų lentelė */}
         <OrdersTable 
