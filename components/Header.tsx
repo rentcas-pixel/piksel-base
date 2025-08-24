@@ -25,8 +25,8 @@ export default function Header({ onAddOrder, activeTab }: { onAddOrder: (order: 
 
   return (
     <header className="bg-white border-b border-gray-200">
-      <div className="w-full px-4 lg:px-6">
-        <div className="flex justify-between items-center h-14">
+      <div className="w-full px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
           {/* Logo ir pavadinimas */}
           <div className="flex items-center">
             <img 

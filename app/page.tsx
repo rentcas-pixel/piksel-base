@@ -122,12 +122,12 @@ export default function HomePage() {
     <div className="min-h-screen bg-gray-50">
       <Header onAddOrder={() => setSelectedOrder({} as Order)} activeTab={activeTab} />
       
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
         </div>
         
-        <main className="w-full px-4 lg:px-6 py-4">
+        <main className="w-full px-6 lg:px-8 py-6">
           {/* Užsakymų lentelė */}
           <OrdersTable 
             orders={filteredOrders} 

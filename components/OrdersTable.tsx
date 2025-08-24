@@ -170,7 +170,7 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                 ].map(({ key, label }) => (
                   <th
                     key={key}
-                    className="px-3 py-2 text-left text-xs font-medium text-gray-500 cursor-pointer"
+                    className="px-4 py-3 text-left text-sm font-medium text-gray-500 cursor-pointer"
                     onClick={() => handleSort(key as SortField)}
                   >
                     <div className="flex items-center space-x-1">
@@ -187,17 +187,17 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                   key={order.id}
                   className="hover:bg-gray-50 cursor-pointer"
                 >
-                  <td className="px-3 py-1.5 text-xs text-gray-900" onClick={() => handleRowClick(order)}>
+                  <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => handleRowClick(order)}>
                     {order.pavadinimas}
                   </td>
-                  <td className="px-3 py-1.5 text-xs text-gray-700" onClick={() => handleRowClick(order)}>
+                  <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => handleRowClick(order)}>
                     {order.agentura}
                   </td>
-                  <td className="px-3 py-1.5 text-xs text-gray-600" onClick={() => handleRowClick(order)}>
+                  <td className="px-4 py-2.5 text-sm text-gray-600" onClick={() => handleRowClick(order)}>
                     {order.orderNo}
                   </td>
-                  <td className="px-3 py-1.5" onClick={() => handleRowClick(order)}>
-                    <span className={`text-xs font-medium ${
+                  <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
+                    <span className={`text-sm font-medium ${
                       order.patvirtinta 
                         ? 'text-green-600' 
                         : 'text-red-600'
@@ -205,13 +205,13 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                       {order.patvirtinta ? 'True' : 'False'}
                     </span>
                   </td>
-                  <td className="px-3 py-1.5 text-xs text-gray-700" onClick={() => handleRowClick(order)}>
+                  <td className="px-4 py-2.5 text-sm text-gray-700" onClick={() => handleRowClick(order)}>
                     <span className="font-medium text-gray-900">{formatDate(order.dataNuo)}</span>
-                    <span className="text-gray-400 mx-1">→</span>
+                    <span className="text-gray-400 mx-2">→</span>
                     <span className="font-medium text-gray-900">{formatDate(order.dataIki)}</span>
                   </td>
-                  <td className="px-3 py-1.5" onClick={() => handleRowClick(order)}>
-                    <span className={`text-xs font-medium ${
+                  <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
+                    <span className={`text-sm font-medium ${
                       order.mediaGautas 
                         ? 'text-green-600' 
                         : 'text-red-600'
@@ -219,11 +219,11 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                       {order.mediaGautas ? 'True' : 'False'}
                     </span>
                   </td>
-                  <td className="px-3 py-1.5 text-xs text-gray-900" onClick={() => handleRowClick(order)}>
+                  <td className="px-4 py-2.5 text-sm text-gray-900" onClick={() => handleRowClick(order)}>
                     {formatPrice(order.galutineKaina)}
                   </td>
-                  <td className="px-3 py-1.5" onClick={() => handleRowClick(order)}>
-                    <span className={`text-xs font-medium ${
+                  <td className="px-4 py-2.5" onClick={() => handleRowClick(order)}>
+                    <span className={`text-sm font-medium ${
                       order.saskaitaIssiusta 
                         ? 'text-green-600' 
                         : 'text-red-600'
@@ -231,7 +231,7 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
                       {order.saskaitaIssiusta ? 'True' : 'False'}
                     </span>
                   </td>
-                  <td className="px-3 py-1.5 text-xs text-gray-500" onClick={() => handleRowClick(order)}>
+                  <td className="px-4 py-2.5 text-sm text-gray-500" onClick={() => handleRowClick(order)}>
                     {formatDate(order.atnaujinta)}
                   </td>
                 </tr>
@@ -241,7 +241,7 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
         </div>
 
         {/* Pagination */}
-        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
+        <div className="bg-white px-6 py-4 flex items-center justify-between border-t border-gray-200">
           <div className="flex-1 flex justify-between sm:hidden">
             <button
               onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
