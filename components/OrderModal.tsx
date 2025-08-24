@@ -4,7 +4,7 @@ import { X, Save, Trash2 } from 'lucide-react'
 import { Order } from '../types/order'
 
 interface OrderModalProps {
-  order: Order
+  order: Order | null
   isOpen: boolean
   onClose: () => void
   onSave: (updatedOrder: Order) => void
@@ -67,7 +67,7 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
   }
 
   const handleDelete = () => {
-    if (confirm('Ar tikrai norite ištrinti šį užsakymą?')) {
+    if (order && confirm('Ar tikrai norite ištrinti šį užsakymą?')) {
       onDelete(order.id)
       onClose()
     }
@@ -101,13 +101,13 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
           <div className="flex items-center justify-between">
             <div className="flex-1">
               <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
-                {getTabLabel()} - {order.orderNo}
+                {getTabLabel()} - {order?.orderNo || 'N/A'}
               </div>
               <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                {order.pavadinimas}
+                {order?.pavadinimas || 'N/A'}
               </h2>
               <p className="text-sm text-gray-600">
-                {order.agentura}
+                {order?.agentura || 'N/A'}
               </p>
             </div>
             <button

@@ -151,14 +151,16 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
 
   return (
     <div>
-      <OrderModal
-        order={selectedOrder}
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        onSave={handleOrderSave}
-        onDelete={handleOrderDelete}
-        activeTab={activeTab}
-      />
+      {selectedOrder && (
+        <OrderModal
+          order={selectedOrder}
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onSave={handleOrderSave}
+          onDelete={handleOrderDelete}
+          activeTab={activeTab}
+        />
+      )}
       
       <div className="bg-white">
         <div className="px-8 py-4 border-b border-gray-200">
