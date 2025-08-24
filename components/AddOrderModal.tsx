@@ -18,8 +18,8 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
     agentura: '',
     tipas: activeTab === 'bendras' ? 'ekranai' : activeTab,
     patvirtinta: false,
-    dataNuo: null,
-    dataIki: null,
+    dataNuo: '',
+    dataIki: '',
     mediaGautas: false,
     galutineKaina: 0,
     saskaitaIssiusta: false,
@@ -42,8 +42,6 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
     
     const newOrder = {
       ...formData,
-      dataNuo: formData.dataNuo ? formData.dataNuo.toISOString().split('T')[0] : '',
-      dataIki: formData.dataIki ? formData.dataIki.toISOString().split('T')[0] : '',
       saskaitosId: orderNo,
       atnaujinta: new Date().toISOString()
     }
@@ -200,8 +198,8 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <CustomDatePicker
-                selected={formData.dataNuo}
-                onChange={(date) => handleInputChange('dataNuo', date)}
+                selected={formData.dataNuo ? new Date(formData.dataNuo) : null}
+                onChange={(date) => handleInputChange('dataNuo', date ? date.toISOString().split('T')[0] : '')}
                 label="Data Nuo"
                 required
                 placeholderText="Pasirinkite pradžios datą"
@@ -210,12 +208,12 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
             
             <div>
               <CustomDatePicker
-                selected={formData.dataIki}
-                onChange={(date) => handleInputChange('dataIki', date)}
+                selected={formData.dataIki ? new Date(formData.dataIki) : null}
+                onChange={(date) => handleInputChange('dataIki', date ? date.toISOString().split('T')[0] : '')}
                 label="Data Iki"
                 required
                 placeholderText="Pasirinkite pabaigos datą"
-                minDate={formData.dataNuo}
+                minDate={formData.dataNuo ? new Date(formData.dataNuo) : undefined}
               />
             </div>
           </div>
