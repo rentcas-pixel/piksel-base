@@ -8,30 +8,27 @@ export async function GET(request: NextRequest) {
     const tipas = searchParams.get('tipas')
     const search = searchParams.get('search')
 
-    let supabaseQuery = supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false })
+    let query = supabase.from('orders').select('*')
 
+    // Filter by type if specified
     if (tipas && tipas !== 'bendras') {
-      supabaseQuery = supabaseQuery.eq('tipas', tipas)
+      query = query.eq('tipas', tipas)
     }
 
+    // Add search if specified
     if (search) {
-      supabaseQuery = supabaseQuery.or(
-        `pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,saskaitosId.ilike.%${search}%`
-      )
+      query = query.or(`pavadinimas.ilike.%${search}%,agentura.ilike.%${search}%,orderNo.ilike.%${search}%,komentaras.ilike.%${search}%`)
     }
 
-    const { data: orders, error } = await supabaseQuery
+    const { data: orders, error } = await query.order('created_at', { ascending: false })
 
     if (error) {
       console.error('Supabase error:', error)
       return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 })
     }
 
-    // Convert snake_case to camelCase for frontend
-    const formattedOrders = (orders || []).map(order => ({
+    // Convert snake_case to camelCase for frontend consistency
+    const formattedOrders = orders.map(order => ({
       id: order.id,
       pavadinimas: order.pavadinimas,
       agentura: order.agentura,
@@ -42,7 +39,7 @@ export async function GET(request: NextRequest) {
       mediaGautas: order.media_gautas,
       galutineKaina: order.galutine_kaina,
       saskaitaIssiusta: order.saskaita_issiusta,
-      saskaitosId: order.saskaitosId,
+      orderNo: order.orderNo,
       komentaras: order.komentaras,
       atnaujinta: order.updated_at,
       created_at: order.created_at,
@@ -97,7 +94,7 @@ export async function POST(request: NextRequest) {
       media_gautas: body.mediaGautas || false,
       galutine_kaina: parseFloat(body.galutineKaina) || 0,
       saskaita_issiusta: body.saskaitaIssiusta || false,
-                   orderNo: body.orderNo || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
+      orderNo: body.orderNo || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
       komentaras: body.komentaras || '',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()

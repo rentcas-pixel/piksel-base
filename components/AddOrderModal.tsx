@@ -37,12 +37,8 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Generate Order No
-    const orderNo = `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`
-    
     const newOrder = {
       ...formData,
-      orderNo: orderNo,
       atnaujinta: new Date().toISOString()
     }
     
@@ -100,6 +96,21 @@ export default function AddOrderModal({ isOpen, onClose, onSave, activeTab }: Ad
 
         {/* Form Content */}
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Order No */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Order No *
+            </label>
+            <input
+              type="text"
+              required
+              value={formData.orderNo}
+              onChange={(e) => handleInputChange('orderNo', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="INV-2024-001"
+            />
+          </div>
+
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
