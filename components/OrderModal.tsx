@@ -1,11 +1,10 @@
 'use client'
-
 import { useState, useEffect } from 'react'
+import { X, Save, Trash2 } from 'lucide-react'
 import { Order } from '../types/order'
-import { X, Calendar, FileText, AlertCircle } from 'lucide-react'
 
 interface OrderModalProps {
-  order: Order | null
+  order: Order
   isOpen: boolean
   onClose: () => void
   onSave: (updatedOrder: Order) => void
@@ -14,29 +13,37 @@ interface OrderModalProps {
 }
 
 export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, activeTab }: OrderModalProps) {
-  console.log('OrderModal props:', { order, isOpen, onClose, onSave, onDelete, activeTab })
-  
-  const [formData, setFormData] = useState<Partial<Order>>({})
-  const [comment, setComment] = useState('')
-  const [reminderDate, setReminderDate] = useState('')
-  const [reminderNote, setReminderNote] = useState('')
-  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [formData, setFormData] = useState<Partial<Order>>({
+    pavadinimas: '',
+    agentura: '',
+    patvirtinta: false,
+    dataNuo: '',
+    dataIki: '',
+    mediaGautas: false,
+    galutineKaina: 0,
+    saskaitaIssiusta: false,
+    orderNo: '',
+    komentaras: '',
+    atnaujinta: '',
+    tipas: 'ekranai'
+  })
 
   useEffect(() => {
     if (order) {
       setFormData({
-        pavadinimas: order.pavadinimas,
-        agentura: order.agentura,
-        patvirtinta: order.patvirtinta,
-        dataNuo: order.dataNuo,
-        dataIki: order.dataIki,
-        mediaGautas: order.mediaGautas,
-        galutineKaina: order.galutineKaina,
-        saskaitaIssiusta: order.saskaitaIssiusta,
-        orderNo: order.orderNo,
-        atnaujinta: order.atnaujinta
+        pavadinimas: order.pavadinimas || '',
+        agentura: order.agentura || '',
+        patvirtinta: order.patvirtinta || false,
+        dataNuo: order.dataNuo || '',
+        dataIki: order.dataIki || '',
+        mediaGautas: order.mediaGautas || false,
+        galutineKaina: order.galutineKaina || 0,
+        saskaitaIssiusta: order.saskaitaIssiusta || false,
+        orderNo: order.orderNo || '',
+        komentaras: order.komentaras || '',
+        atnaujinta: order.atnaujinta || '',
+        tipas: order.tipas || 'ekranai'
       })
-      setComment(order.komentaras || '')
     }
   }, [order])
 
@@ -47,275 +54,273 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
     }))
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0])
-    }
-  }
-
-  const handleSave = async () => {
+  const handleSave = () => {
     if (order) {
-      try {
-        const updatedOrder: Order = {
-          ...order,
-          ...formData,
-          komentaras: comment,
-          atnaujinta: new Date().toISOString()
-        }
-        
-        // Save to Supabase
-        const response = await fetch(`/api/orders/${order.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedOrder),
-        })
-
-        if (!response.ok) {
-          throw new Error('Failed to save order')
-        }
-
-        const savedOrder = await response.json()
-        onSave(savedOrder)
-        onClose()
-      } catch (error) {
-        console.error('Error saving order:', error)
-        alert('Klaida išsaugant užsakymą')
+      const updatedOrder: Order = {
+        ...order,
+        ...formData,
+        atnaujinta: new Date().toISOString()
       }
+      onSave(updatedOrder)
+      onClose()
     }
   }
 
   const handleDelete = () => {
-    if (order) {
+    if (confirm('Ar tikrai norite ištrinti šį užsakymą?')) {
       onDelete(order.id)
       onClose()
     }
   }
 
-  console.log('Modal render check:', { isOpen, order, shouldRender: isOpen && order })
   if (!isOpen || !order) return null
 
+  const getTabColor = () => {
+    switch (activeTab) {
+      case 'ekranai': return 'border-blue-500'
+      case 'viadukai': return 'border-black'
+      case 'bendras': return 'border-gray-500'
+      default: return 'border-gray-500'
+    }
+  }
+
+  const getTabLabel = () => {
+    switch (activeTab) {
+      case 'ekranai': return 'EKRANAI'
+      case 'viadukai': return 'VIADUKAI'
+      case 'bendras': return 'UŽSAKYMAS'
+      default: return 'UŽSAKYMAS'
+    }
+  }
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-        {/* Header - Pixelmator Pro Style */}
-        <div className="bg-white border border-gray-200 rounded-t-lg p-6 relative">
-          {/* Tab indicator with order number - small text above */}
-          <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
-            {activeTab === 'bendras' 
-              ? `UŽSAKYMAS - ${order.orderNo}`
-              : activeTab === 'ekranai' 
-                ? `EKRANAI - ${order.orderNo}`
-                : `VIADUKAI - ${order.orderNo}`
-            }
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
+        {/* Header - PocketBase stilius */}
+        <div className="bg-gray-50 border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex-1">
+              <div className="text-xs text-gray-500 mb-2 uppercase tracking-wide">
+                {getTabLabel()} - {order.orderNo}
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                {order.pavadinimas}
+              </h2>
+              <p className="text-sm text-gray-600">
+                {order.agentura}
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
           </div>
-          
-          {/* Main title */}
-          <h2 className="text-2xl font-bold text-black mb-1">
-            {order.pavadinimas}
-          </h2>
-          
-          {/* Agency name - smaller text below */}
-          <div className="text-base text-gray-700 mb-4">
-            {order.agentura}
-          </div>
-          
-          {/* Colored line based on tab */}
-          <div 
-            className={`h-1 w-full rounded ${
-              activeTab === 'bendras' 
-                ? 'bg-gray-500' 
-                : activeTab === 'ekranai' 
-                  ? 'bg-blue-500' 
-                  : 'bg-black'
-            }`}
-          />
-          
-          {/* Close button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <X className="h-6 w-6" />
-          </button>
+          {/* Spalvota linija */}
+          <div className={`mt-4 h-1 bg-gradient-to-r ${getTabColor()} rounded-full`}></div>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
-          {/* Editable Fields - New Layout */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Approve</label>
-              <select
-                value={formData.patvirtinta ? 'true' : 'false'}
-                onChange={(e) => handleInputChange('patvirtinta', e.target.value === 'true')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="true">Taip</option>
-                <option value="false">Ne</option>
-                <option value="reserved">Rezervuota</option>
-                <option value="cancelled">Atšaukta</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Media received</label>
-              <select
-                value={formData.mediaGautas ? 'true' : 'false'}
-                onChange={(e) => handleInputChange('mediaGautas', e.target.value === 'true')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="true">Taip</option>
-                <option value="false">Ne</option>
-              </select>
-            </div>
-          </div>
+        <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
+          {/* Toggle switches - PocketBase stilius */}
+          <div className="space-y-6">
+            {/* Row 1: Approve, Media received */}
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Patvirtinta
+                </label>
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('patvirtinta', !formData.patvirtinta)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                      formData.patvirtinta ? 'bg-blue-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        formData.patvirtinta ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                  <span className="ml-3 text-sm text-gray-600">
+                    {formData.patvirtinta ? 'Taip' : 'Ne'}
+                  </span>
+                </div>
+              </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Price (€)</label>
-              <input
-                type="number"
-                step="0.01"
-                value={formData.galutineKaina || ''}
-                onChange={(e) => handleInputChange('galutineKaina', parseFloat(e.target.value) || 0)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="0.00"
-              />
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Media gautas
+                </label>
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('mediaGautas', !formData.mediaGautas)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                      formData.mediaGautas ? 'bg-blue-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        formData.mediaGautas ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                  <span className="ml-3 text-sm text-gray-600">
+                    {formData.mediaGautas ? 'Taip' : 'Ne'}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Invoice sent</label>
-              <select
-                value={formData.saskaitaIssiusta ? 'true' : 'false'}
-                onChange={(e) => handleInputChange('saskaitaIssiusta', e.target.value === 'true')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="true">Taip</option>
-                <option value="false">Ne</option>
-              </select>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Data nuo</label>
-              <div className="relative">
+            {/* Row 2: Price, Invoice sent */}
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Kaina (€)
+                </label>
+                <input
+                  type="number"
+                  value={formData.galutineKaina || ''}
+                  onChange={(e) => handleInputChange('galutineKaina', parseFloat(e.target.value) || 0)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="0.00"
+                  step="0.01"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Sąskaita išsiųsta
+                </label>
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('saskaitaIssiusta', !formData.saskaitaIssiusta)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
+                      formData.saskaitaIssiusta ? 'bg-blue-600' : 'bg-gray-200'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                        formData.saskaitaIssiusta ? 'translate-x-6' : 'translate-x-1'
+                      }`}
+                    />
+                  </button>
+                  <span className="ml-3 text-sm text-gray-600">
+                    {formData.saskaitaIssiusta ? 'Taip' : 'Ne'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Row 3: Data nuo, Data iki */}
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Data nuo
+                </label>
                 <input
                   type="date"
                   value={formData.dataNuo || ''}
                   onChange={(e) => handleInputChange('dataNuo', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                 />
-                <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
               </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Data iki</label>
-              <div className="relative">
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Data iki
+                </label>
                 <input
                   type="date"
                   value={formData.dataIki || ''}
                   onChange={(e) => handleInputChange('dataIki', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                 />
-                <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
               </div>
             </div>
-          </div>
 
-          {/* Comment Section */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Komentaras</label>
-            <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Palikti pastabas apie klienta..."
-            />
-          </div>
-
-          {/* File Attachment Section */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-              <FileText className="h-4 w-4 mr-2" />
-              Failai / Print screen
-            </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-              <input
-                type="file"
-                accept=".pdf,.xls,.xlsx,.png,.jpg,.jpeg"
-                onChange={handleFileChange}
-                className="hidden"
-                id="file-upload"
-              />
-              <label
-                htmlFor="file-upload"
-                className="cursor-pointer bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-              >
-                Choose files
+            {/* Komentaras */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Komentaras
               </label>
-              <p className="mt-2 text-sm text-gray-500">
-                {selectedFile ? selectedFile.name : 'No file chosen'}
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Galite ir įklijuoti ekrano nuotrauką su Cmd/Ctrl+V
-              </p>
+              <textarea
+                value={formData.komentaras || ''}
+                onChange={(e) => handleInputChange('komentaras', e.target.value)}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Įveskite komentarą..."
+              />
             </div>
-          </div>
 
-          {/* Reminder Section */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
-              <AlertCircle className="h-4 w-4 mr-2" />
-              Priminimas
-            </label>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs text-gray-600 mb-1">Priminimo data</label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={reminderDate}
-                    onChange={(e) => setReminderDate(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <Calendar className="absolute right-3 top-2.5 h-4 w-4 text-gray-400" />
+            {/* File upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Pridėti failą
+              </label>
+              <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+                <div className="text-gray-400 mb-2">
+                  <svg className="mx-auto h-12 w-12" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </div>
+                <p className="text-sm text-gray-600">
+                  Drag & drop failą čia arba <span className="text-blue-600 hover:text-blue-500 cursor-pointer">pasirinkite</span>
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  PDF, XLS, screenshots (max 10MB)
+                </p>
               </div>
-              <div>
-                <label className="block text-xs text-gray-600 mb-1">Priminimo žinutė</label>
+            </div>
+
+            {/* Reminder */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Priminimas
+              </label>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="date"
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Data"
+                />
                 <input
                   type="text"
-                  value={reminderNote}
-                  onChange={(e) => setReminderNote(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Pvz.: perskambinti, patvirtinti užsakymą..."
+                  className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Pastaba"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Footer Buttons */}
-        <div className="bg-gray-50 px-6 py-4 rounded-b-lg flex justify-between">
+        {/* Footer */}
+        <div className="bg-gray-50 px-6 py-4 border-t border-gray-200 flex justify-between">
           <button
             onClick={handleDelete}
-            className="px-4 py-2 text-red-600 border border-red-300 rounded-md hover:bg-red-50 transition-colors"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-red-700 bg-red-100 border border-red-300 rounded-md hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
+            <Trash2 className="h-4 w-4 mr-2" />
             Ištrinti
           </button>
+          
           <div className="flex space-x-3">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               Uždaryti
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
+              <Save className="h-4 w-4 mr-2" />
               Išsaugoti
             </button>
           </div>
