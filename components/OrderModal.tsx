@@ -125,8 +125,8 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
           {/* Toggle switches - PocketBase stilius */}
           <div className="space-y-6">
-            {/* Row 1: Approve, Media received */}
-            <div className="grid grid-cols-2 gap-6">
+            {/* Row 1: Approve, Media received, Invoice sent - all in one row */}
+            <div className="grid grid-cols-3 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
                   Patvirtinta
@@ -174,23 +174,6 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
                   </span>
                 </div>
               </div>
-            </div>
-
-            {/* Row 2: Price, Invoice sent */}
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Kaina (€)
-                </label>
-                <input
-                  type="number"
-                  value={formData.galutineKaina || ''}
-                  onChange={(e) => handleInputChange('galutineKaina', parseFloat(e.target.value) || 0)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="0.00"
-                  step="0.01"
-                />
-              </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-3">
@@ -215,6 +198,21 @@ export default function OrderModal({ order, isOpen, onClose, onSave, onDelete, a
                   </span>
                 </div>
               </div>
+            </div>
+
+            {/* Row 2: Price only */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Kaina (€)
+              </label>
+              <input
+                type="number"
+                value={formData.galutineKaina || ''}
+                onChange={(e) => handleInputChange('galutineKaina', parseFloat(e.target.value) || 0)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="0.00"
+                step="0.01"
+              />
             </div>
 
             {/* Row 3: Data nuo, Data iki */}
