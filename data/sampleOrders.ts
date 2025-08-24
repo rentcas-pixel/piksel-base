@@ -12,7 +12,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: true,
     galutineKaina: 2500.00,
     saskaitaIssiusta: true,
-    saskaitosId: 'INV-2024-001',
+    orderNo: 'INV-2024-001',
     atnaujinta: '2024-01-20',
     tipas: 'ekranai',
     komentaras: 'Pagrindinė ekranų kampanija Vilniuje ir Kaune'
@@ -27,7 +27,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: true,
     galutineKaina: 1800.00,
     saskaitaIssiusta: false,
-    saskaitosId: 'INV-2024-002',
+    orderNo: 'INV-2024-002',
     atnaujinta: '2024-02-05',
     tipas: 'ekranai',
     komentaras: 'Miesto informacijos ekranai'
@@ -42,7 +42,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: false,
     galutineKaina: 3200.00,
     saskaitaIssiusta: false,
-    saskaitosId: 'INV-2024-003',
+    orderNo: 'INV-2024-003',
     atnaujinta: '2024-02-20',
     tipas: 'ekranai',
     komentaras: 'Prekybos centro reklamų ekranai'
@@ -57,7 +57,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: true,
     galutineKaina: 4500.00,
     saskaitaIssiusta: true,
-    saskaitosId: 'INV-2024-004',
+    orderNo: 'INV-2024-004',
     atnaujinta: '2024-01-25',
     tipas: 'ekranai',
     komentaras: 'Uosto informacijos sistema'
@@ -72,7 +72,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: false,
     galutineKaina: 2100.00,
     saskaitaIssiusta: false,
-    saskaitosId: 'INV-2024-005',
+    orderNo: 'INV-2024-005',
     atnaujinta: '2024-03-05',
     tipas: 'ekranai',
     komentaras: 'Miesto centras ir autobusų stotys'
@@ -89,7 +89,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: true,
     galutineKaina: 15000.00,
     saskaitaIssiusta: true,
-    saskaitosId: 'INV-2024-006',
+    orderNo: 'INV-2024-006',
     atnaujinta: '2024-01-15',
     tipas: 'viadukai',
     komentaras: 'Pagrindinio kelio viadukas'
@@ -104,7 +104,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: false,
     galutineKaina: 8500.00,
     saskaitaIssiusta: false,
-    saskaitosId: 'INV-2024-007',
+    orderNo: 'INV-2024-007',
     atnaujinta: '2024-02-10',
     tipas: 'viadukai',
     komentaras: 'Jūros kranto kelio viadukas'
@@ -119,7 +119,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: true,
     galutineKaina: 12000.00,
     saskaitaIssiusta: false,
-    saskaitosId: 'INV-2024-008',
+    orderNo: 'INV-2024-008',
     atnaujinta: '2024-02-01',
     tipas: 'viadukai',
     komentaras: 'Regioninio kelio viadukas'
@@ -134,7 +134,7 @@ export const sampleOrders: Order[] = [
     mediaGautas: false,
     galutineKaina: 9500.00,
     saskaitaIssiusta: false,
-    saskaitosId: 'INV-2024-009',
+    orderNo: 'INV-2024-009',
     atnaujinta: '2024-03-05',
     tipas: 'viadukai',
     komentaras: 'Pietų regiono kelio viadukas'

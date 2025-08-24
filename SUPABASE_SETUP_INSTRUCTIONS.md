@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS orders (
   media_gautas BOOLEAN DEFAULT false,
   galutine_kaina DECIMAL(10,2) DEFAULT 0.00,
   saskaita_issiusta BOOLEAN DEFAULT false,
-  saskaitos_id VARCHAR(100) UNIQUE NOT NULL,
+  orderNo VARCHAR(100) UNIQUE NOT NULL,
   komentaras TEXT,
   atnaujinta TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS orders (
 
 -- Create index for better performance
 CREATE INDEX IF NOT EXISTS idx_orders_tipas ON orders(tipas);
-CREATE INDEX IF NOT EXISTS idx_orders_saskaitos_id ON orders(saskaitos_id);
+CREATE INDEX IF NOT EXISTS idx_orders_orderNo ON orders(orderNo);
 CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at);
 
 -- Create files table for attachments
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS files (
 CREATE INDEX IF NOT EXISTS idx_files_order_id ON files(order_id);
 
 -- Insert sample data
-INSERT INTO orders (pavadinimas, agentura, tipas, patvirtinta, data_nuo, data_iki, media_gautas, galutine_kaina, saskaita_issiusta, saskaitos_id, komentaras) VALUES
+INSERT INTO orders (pavadinimas, agentura, tipas, patvirtinta, data_nuo, data_iki, media_gautas, galutine_kaina, saskaita_issiusta, orderNo, komentaras) VALUES
 ('Lidl Viadukas', 'Marijampolės Miesto Savivaldybė', 'viadukai', true, '2025-09-15', '2025-09-22', true, 2500.00, true, 'INV-2024-001', 'Sėkmingai įgyvendintas projektas'),
 ('Alytus - Marijampolė Viadukas', 'Marijampolės Miesto Savivaldybė', 'viadukai', true, '2025-08-01', '2025-08-15', true, 3200.00, true, 'INV-2024-002', 'Darbai baigti anksčiau termino'),
 ('Kauno Ekranas', 'Kauno Miesto Savivaldybė', 'ekranai', false, '2025-10-01', '2025-10-31', false, 1800.00, false, 'INV-2024-003', 'Laukia patvirtinimo'),
