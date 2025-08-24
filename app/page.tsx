@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react'
 import Header from '../components/Header'
 import Tabs from '../components/Tabs'
 import OrdersTable from '../components/OrdersTable'
+import ImportButton from '../components/ImportButton'
 import { Order, OrderFilters } from '../types/order'
 
 export default function HomePage() {
@@ -140,8 +141,8 @@ export default function HomePage() {
       <Tabs activeTab={activeTab} onTabChange={handleTabChange} />
       
       <main className="w-full px-8 lg:px-12 py-8">
-
-
+        <ImportButton />
+        
         {/* Užsakymų lentelė */}
         <OrdersTable 
           orders={filteredOrders} 
@@ -149,8 +150,6 @@ export default function HomePage() {
           onOrderUpdate={handleOrderUpdate}
           activeTab={activeTab}
         />
-
-
       </main>
     </div>
   )
