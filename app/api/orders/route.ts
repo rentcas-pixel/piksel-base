@@ -126,7 +126,27 @@ export async function POST(request: NextRequest) {
     
     console.log('Successfully inserted order:', order)
 
-    return NextResponse.json(order, { status: 201 })
+    // Convert snake_case to camelCase for frontend consistency
+    const formattedOrder = {
+      id: order.id,
+      pavadinimas: order.pavadinimas,
+      agentura: order.agentura,
+      tipas: order.tipas,
+      patvirtinta: order.patvirtinta,
+      dataNuo: order.data_nuo,
+      dataIki: order.data_iki,
+      mediaGautas: order.media_gautas,
+      galutineKaina: order.galutine_kaina,
+      saskaitaIssiusta: order.saskaita_issiusta,
+      saskaitosId: order.saskaitosId,
+      komentaras: order.komentaras,
+      atnaujinta: order.updated_at,
+      created_at: order.created_at,
+      updated_at: order.updated_at
+    }
+
+    console.log('Formatted order for frontend:', formattedOrder)
+    return NextResponse.json(formattedOrder, { status: 201 })
   } catch (error) {
     console.error('Error creating order:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'

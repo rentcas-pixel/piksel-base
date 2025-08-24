@@ -62,10 +62,15 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
   const currentOrders = sortedOrders.slice(startIndex, endIndex)
 
   const formatDate = (dateString: string | undefined | null) => {
+    console.log('🔍 formatDate input:', dateString, 'type:', typeof dateString)
     if (!dateString) return '-'
     try {
-      return new Date(dateString).toLocaleDateString('lt-LT')
+      const date = new Date(dateString)
+      const formatted = date.toLocaleDateString('lt-LT')
+      console.log('✅ Date formatted successfully:', dateString, '→', formatted)
+      return formatted
     } catch (error) {
+      console.error('❌ Date formatting error:', error, 'for date:', dateString)
       return '-'
     }
   }
@@ -123,6 +128,16 @@ export default function OrdersTable({ orders, onOrderClick, onOrderUpdate, activ
       console.error('Error deleting order:', error)
       alert('Klaida ištrinant užsakymą')
     }
+  }
+
+  // Debug: log orders data
+  console.log('📊 OrdersTable received orders:', orders)
+  if (orders.length > 0) {
+    console.log('📅 First order dates:', {
+      dataNuo: orders[0].dataNuo,
+      dataIki: orders[0].dataIki,
+      atnaujinta: orders[0].atnaujinta
+    })
   }
 
   // Loading state

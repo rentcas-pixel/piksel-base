@@ -13,25 +13,45 @@ export default function HomePage() {
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Load orders from Supabase
+  // Load orders from localStorage first, then from Supabase
   useEffect(() => {
-    const fetchOrders = async () => {
+    const loadOrders = async () => {
       try {
+        // First, try to load from localStorage
+        const localOrders = JSON.parse(localStorage.getItem('pikselOrders') || '[]')
+        if (localOrders.length > 0) {
+          console.log('📱 Loading orders from localStorage:', localOrders.length)
+          setOrders(localOrders)
+          setLoading(false)
+        }
+        
+        // Then try to load from Supabase
         const response = await fetch('/api/orders')
         if (response.ok) {
-          const data = await response.json()
-          setOrders(data)
+          const supabaseOrders = await response.json()
+          console.log('☁️ Loading orders from Supabase:', supabaseOrders.length)
+          
+          // Merge local and Supabase orders, avoiding duplicates
+          const allOrders = [...localOrders, ...supabaseOrders]
+          const uniqueOrders = allOrders.filter((order, index, self) => 
+            index === self.findIndex(o => o.id === order.id)
+          )
+          
+          setOrders(uniqueOrders)
+          
+          // Update localStorage with merged data
+          localStorage.setItem('pikselOrders', JSON.stringify(uniqueOrders))
         } else {
-          console.error('Failed to fetch orders')
+          console.error('Failed to fetch orders from Supabase')
         }
       } catch (error) {
-        console.error('Error fetching orders:', error)
+        console.error('Error loading orders:', error)
       } finally {
         setLoading(false)
       }
     }
     
-    fetchOrders()
+    loadOrders()
   }, [])
 
   // Filtruoti užsakymus pagal tab ir paieškos tekstą
@@ -75,9 +95,9 @@ export default function HomePage() {
 
   const handleAddOrder = async (newOrder: Partial<Order>) => {
     try {
-      console.log('🚀 Attempting to add order via MOCK API...')
+      console.log('🚀 Attempting to add order via SUPABASE API...')
       
-      const response = await fetch('/api/orders-mock', {
+      const response = await fetch('/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,19 +107,25 @@ export default function HomePage() {
 
       if (response.ok) {
         const createdOrder = await response.json()
-        console.log('✅ Order created successfully:', createdOrder)
+        console.log('✅ Order created successfully in Supabase:', createdOrder)
         
-        // Add to local state instead of page reload
-        setOrders(prev => [createdOrder, ...prev])
+        // Refresh orders from Supabase
+        const refreshResponse = await fetch('/api/orders')
+        if (refreshResponse.ok) {
+          const refreshedOrders = await refreshResponse.json()
+          setOrders(refreshedOrders)
+        }
         
         // Show success message
-        alert('Užsakymas sėkmingai pridėtas!')
+        alert('Užsakymas sėkmingai pridėtas į duomenų bazę!')
       } else {
-        throw new Error('Failed to add order')
+        const errorData = await response.json()
+        console.error('❌ Supabase API error:', errorData)
+        throw new Error(`Failed to add order: ${errorData.error}`)
       }
     } catch (error) {
       console.error('❌ Error adding order:', error)
-      alert('Klaida pridedant užsakymą')
+      alert(`Klaida pridedant užsakymą: ${error.message}`)
     }
   }
 
