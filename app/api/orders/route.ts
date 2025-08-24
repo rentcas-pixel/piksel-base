@@ -41,9 +41,9 @@ export async function GET(request: NextRequest) {
       saskaitaIssiusta: order.saskaita_issiusta,
       orderNo: order.order_no,
       komentaras: order.komentaras,
-      atnaujinta: order.updated_at,
+      atnaujinta: order.atnaujinta,
       created_at: order.created_at,
-      updated_at: order.updated_at
+      updated_at: order.atnaujinta
     }))
 
     return NextResponse.json(formattedOrders)
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
       order_no: body.orderNo || `INV-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`,
       komentaras: body.komentaras || '',
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      atnaujinta: new Date().toISOString()
     }
     
     console.log('Sending to Supabase:', supabaseOrder)
@@ -137,9 +137,9 @@ export async function POST(request: NextRequest) {
       saskaitaIssiusta: order.saskaita_issiusta,
       orderNo: order.order_no,
       komentaras: order.komentaras,
-      atnaujinta: order.updated_at,
+      atnaujinta: order.atnaujinta,
       created_at: order.created_at,
-      updated_at: order.updated_at
+      updated_at: order.atnaujinta
     }
 
     console.log('Formatted order for frontend:', formattedOrder)
